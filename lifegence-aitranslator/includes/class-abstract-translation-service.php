@@ -77,7 +77,7 @@ abstract class LG_Abstract_Translation_Service implements LG_Translation_Service
             // phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
             throw new Exception(
                 /* translators: %s: Provider name (gemini or openai) */
-                sprintf(__('%s API key not configured', 'lg-aitranslator'), ucfirst($provider_name))
+                sprintf(__('%s API key not configured', 'lifegence-aitranslator'), ucfirst($provider_name))
             );
             // phpcs:enable WordPress.Security.EscapeOutput.ExceptionNotEscaped
         }

@@ -114,7 +114,7 @@ class LG_Error_Handler {
             ?>
             <div class="notice notice-<?php echo esc_attr($class); ?> is-dismissible">
                 <p>
-                    <strong><?php echo esc_html__('Lifegence AITranslator:', 'lg-aitranslator'); ?></strong>
+                    <strong><?php echo esc_html__('Lifegence AITranslator:', 'lifegence-aitranslator'); ?></strong>
                     <?php echo esc_html($notice['message']); ?>
                     <small>(<?php echo esc_html($notice['timestamp']); ?>)</small>
                 </p>

@@ -7,7 +7,7 @@
  * Author: Lifegence Corporation
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: lg-aitranslator
+ * Text Domain: lifegence-aitranslator
  * Domain Path: /languages
  */
 
@@ -304,10 +304,10 @@ class LG_AITranslator {
      */
     public function add_admin_menu() {
         add_options_page(
-            __('Lifegence AITranslator Settings', 'lg-aitranslator'),
-            __('Lifegence AITranslator', 'lg-aitranslator'),
+            __('Lifegence AITranslator Settings', 'lifegence-aitranslator'),
+            __('Lifegence AITranslator', 'lifegence-aitranslator'),
             'manage_options',
-            'lg-aitranslator',
+            'lifegence-aitranslator',
             array($this, 'render_admin_page')
         );
     }
@@ -328,33 +328,33 @@ class LG_AITranslator {
      * Enqueue admin scripts and styles
      */
     public function enqueue_admin_scripts($hook) {
-        if ($hook !== 'settings_page_lg-aitranslator') {
+        if ($hook !== 'settings_page_lifegence-aitranslator') {
             return;
         }
 
         wp_enqueue_style(
-            'lg-aitranslator-admin',
+            'lifegence-aitranslator-admin',
             LG_AITRANS_PLUGIN_URL . 'admin/css/admin.css',
             array(),
             LG_AITRANS_VERSION
         );
 
         wp_enqueue_script(
-            'lg-aitranslator-admin',
+            'lifegence-aitranslator-admin',
             LG_AITRANS_PLUGIN_URL . 'admin/js/admin.js',
             array('jquery'),
             LG_AITRANS_VERSION,
             true
         );
 
-        wp_localize_script('lg-aitranslator-admin', 'lgAITranslator', array(
+        wp_localize_script('lifegence-aitranslator-admin', 'lgAITranslator', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('lg_aitranslator_admin'),
             'strings' => array(
-                'testing' => __('Testing...', 'lg-aitranslator'),
-                'clearing' => __('Clearing...', 'lg-aitranslator'),
-                'success' => __('Success', 'lg-aitranslator'),
-                'error' => __('Error', 'lg-aitranslator')
+                'testing' => __('Testing...', 'lifegence-aitranslator'),
+                'clearing' => __('Clearing...', 'lifegence-aitranslator'),
+                'success' => __('Success', 'lifegence-aitranslator'),
+                'error' => __('Error', 'lifegence-aitranslator')
             )
         ));
     }
@@ -370,23 +370,23 @@ class LG_AITranslator {
         }
 
         wp_enqueue_style(
-            'lg-aitranslator-frontend',
+            'lifegence-aitranslator-frontend',
             LG_AITRANS_PLUGIN_URL . 'assets/css/frontend.css',
             array(),
             LG_AITRANS_VERSION
         );
 
         wp_enqueue_script(
-            'lg-aitranslator-frontend',
+            'lifegence-aitranslator-frontend',
             LG_AITRANS_PLUGIN_URL . 'assets/js/frontend.js',
             array('jquery'),
             LG_AITRANS_VERSION,
             true
         );
 
-        wp_localize_script('lg-aitranslator-frontend', 'lgAITranslatorFrontend', array(
+        wp_localize_script('lifegence-aitranslator-frontend', 'lgAITranslatorFrontend', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
-            'resturl' => rest_url('lg-aitranslator/v1/'),
+            'resturl' => rest_url('lifegence-aitranslator/v1/'),
             'nonce' => wp_create_nonce('lg_aitranslator_frontend'),
             'currentLang' => $this->get_current_language(),
             'defaultLang' => $settings['default_language'] ?? 'en'
@@ -418,7 +418,7 @@ class LG_AITranslator {
      * Register REST API routes
      */
     public function register_rest_routes() {
-        register_rest_route('lg-aitranslator/v1', '/translate', array(
+        register_rest_route('lifegence-aitranslator/v1', '/translate', array(
             'methods' => 'POST',
             'callback' => array($this, 'rest_translate'),
             'permission_callback' => array($this, 'check_api_permission'),
@@ -440,7 +440,7 @@ class LG_AITranslator {
             )
         ));
 
-        register_rest_route('lg-aitranslator/v1', '/languages', array(
+        register_rest_route('lifegence-aitranslator/v1', '/languages', array(
             'methods' => 'GET',
             'callback' => array($this, 'rest_get_languages'),
             'permission_callback' => '__return_true' // Public endpoint
@@ -464,7 +464,7 @@ class LG_AITranslator {
 
         return new WP_Error(
             'rest_forbidden',
-            __('You do not have permission to access this endpoint.', 'lg-aitranslator'),
+            __('You do not have permission to access this endpoint.', 'lifegence-aitranslator'),
             array('status' => 403)
         );
     }
@@ -476,7 +476,7 @@ class LG_AITranslator {
         $settings = get_option('lg_aitranslator_settings', array());
 
         if (empty($settings['enabled'])) {
-            return new WP_Error('disabled', __('Translation service is disabled', 'lg-aitranslator'), array('status' => 403));
+            return new WP_Error('disabled', __('Translation service is disabled', 'lifegence-aitranslator'), array('status' => 403));
         }
 
         $text = $request->get_param('text');
@@ -484,7 +484,7 @@ class LG_AITranslator {
         $source_lang = $request->get_param('source_lang') ?: $settings['default_language'];
 
         if (empty($text) || empty($target_lang)) {
-            return new WP_Error('missing_params', __('Missing required parameters', 'lg-aitranslator'), array('status' => 400));
+            return new WP_Error('missing_params', __('Missing required parameters', 'lifegence-aitranslator'), array('status' => 400));
         }
 
         try {

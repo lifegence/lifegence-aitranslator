@@ -87,7 +87,7 @@ Please review the respective API pricing before use as API usage may incur costs
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/lg-aitranslator/` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/lifegence-aitranslator/` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Navigate to Settings → Lifegence AITranslator
 4. Enter your Google Gemini API key or OpenAI API key
@@ -251,7 +251,7 @@ The plugin does not store any personal data beyond what WordPress normally store
 == Support ==
 
 For support, bug reports, or feature requests, please visit:
-https://github.com/lifegence/lg-aitranslator
+https://github.com/lifegence/lifegence-aitranslator
 
 == Credits ==
 

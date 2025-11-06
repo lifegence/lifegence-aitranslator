@@ -36,7 +36,7 @@ class LG_Translation_Service_Factory {
                 // phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
                 throw new Exception(
                     /* translators: %s: Provider name */
-                    sprintf(__('Unsupported translation provider: %s', 'lg-aitranslator'), $provider)
+                    sprintf(__('Unsupported translation provider: %s', 'lifegence-aitranslator'), $provider)
                 );
                 // phpcs:enable WordPress.Security.EscapeOutput.ExceptionNotEscaped
         }
@@ -50,21 +50,21 @@ class LG_Translation_Service_Factory {
     public static function get_providers() {
         return array(
             'gemini' => array(
-                'name' => __('Google Gemini', 'lg-aitranslator'),
-                'description' => __('Fast and cost-effective AI translation', 'lg-aitranslator'),
+                'name' => __('Google Gemini', 'lifegence-aitranslator'),
+                'description' => __('Fast and cost-effective AI translation', 'lifegence-aitranslator'),
                 'models' => array(
-                    'gemini-1.5-flash' => __('Gemini 1.5 Flash (Recommended)', 'lg-aitranslator'),
-                    'gemini-1.5-pro' => __('Gemini 1.5 Pro (Higher Quality)', 'lg-aitranslator'),
-                    'gemini-2.0-flash' => __('Gemini 2.0 Flash (Latest)', 'lg-aitranslator')
+                    'gemini-1.5-flash' => __('Gemini 1.5 Flash (Recommended)', 'lifegence-aitranslator'),
+                    'gemini-1.5-pro' => __('Gemini 1.5 Pro (Higher Quality)', 'lifegence-aitranslator'),
+                    'gemini-2.0-flash' => __('Gemini 2.0 Flash (Latest)', 'lifegence-aitranslator')
                 )
             ),
             'openai' => array(
-                'name' => __('OpenAI GPT', 'lg-aitranslator'),
-                'description' => __('Premium quality AI translation', 'lg-aitranslator'),
+                'name' => __('OpenAI GPT', 'lifegence-aitranslator'),
+                'description' => __('Premium quality AI translation', 'lifegence-aitranslator'),
                 'models' => array(
-                    'gpt-4o-mini' => __('GPT-4o Mini (Recommended)', 'lg-aitranslator'),
-                    'gpt-4o' => __('GPT-4o (Highest Quality)', 'lg-aitranslator'),
-                    'gpt-3.5-turbo' => __('GPT-3.5 Turbo (Budget)', 'lg-aitranslator')
+                    'gpt-4o-mini' => __('GPT-4o Mini (Recommended)', 'lifegence-aitranslator'),
+                    'gpt-4o' => __('GPT-4o (Highest Quality)', 'lifegence-aitranslator'),
+                    'gpt-3.5-turbo' => __('GPT-3.5 Turbo (Budget)', 'lifegence-aitranslator')
                 )
             )
         );

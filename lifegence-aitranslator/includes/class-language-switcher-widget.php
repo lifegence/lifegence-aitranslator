@@ -21,9 +21,9 @@ class LG_Language_Switcher_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             'lg_language_switcher',
-            __('Lifegence Language Switcher', 'lg-aitranslator'),
+            __('Lifegence Language Switcher', 'lifegence-aitranslator'),
             array(
-                'description' => __('Display language switcher for AI translation', 'lg-aitranslator'),
+                'description' => __('Display language switcher for AI translation', 'lifegence-aitranslator'),
                 'classname' => 'lg-language-switcher-widget'
             )
         );
@@ -65,14 +65,14 @@ class LG_Language_Switcher_Widget extends WP_Widget {
      * Widget settings form
      */
     public function form($instance) {
-        $title = !empty($instance['title']) ? $instance['title'] : __('Select Language', 'lg-aitranslator');
+        $title = !empty($instance['title']) ? $instance['title'] : __('Select Language', 'lifegence-aitranslator');
         $type = !empty($instance['type']) ? $instance['type'] : 'dropdown';
         $show_flags = isset($instance['show_flags']) ? (bool) $instance['show_flags'] : true;
         $show_native = isset($instance['show_native']) ? (bool) $instance['show_native'] : true;
         ?>
         <p>
             <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">
-                <?php esc_html_e('Title:', 'lg-aitranslator'); ?>
+                <?php esc_html_e('Title:', 'lifegence-aitranslator'); ?>
             </label>
             <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
                 name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
@@ -81,13 +81,13 @@ class LG_Language_Switcher_Widget extends WP_Widget {
 
         <p>
             <label for="<?php echo esc_attr($this->get_field_id('type')); ?>">
-                <?php esc_html_e('Display Type:', 'lg-aitranslator'); ?>
+                <?php esc_html_e('Display Type:', 'lifegence-aitranslator'); ?>
             </label>
             <select class="widefat" id="<?php echo esc_attr($this->get_field_id('type')); ?>"
                 name="<?php echo esc_attr($this->get_field_name('type')); ?>">
-                <option value="dropdown" <?php selected($type, 'dropdown'); ?>><?php esc_html_e('Dropdown', 'lg-aitranslator'); ?></option>
-                <option value="list" <?php selected($type, 'list'); ?>><?php esc_html_e('List', 'lg-aitranslator'); ?></option>
-                <option value="flags" <?php selected($type, 'flags'); ?>><?php esc_html_e('Flags Only', 'lg-aitranslator'); ?></option>
+                <option value="dropdown" <?php selected($type, 'dropdown'); ?>><?php esc_html_e('Dropdown', 'lifegence-aitranslator'); ?></option>
+                <option value="list" <?php selected($type, 'list'); ?>><?php esc_html_e('List', 'lifegence-aitranslator'); ?></option>
+                <option value="flags" <?php selected($type, 'flags'); ?>><?php esc_html_e('Flags Only', 'lifegence-aitranslator'); ?></option>
             </select>
         </p>
 
@@ -96,7 +96,7 @@ class LG_Language_Switcher_Widget extends WP_Widget {
                 id="<?php echo esc_attr($this->get_field_id('show_flags')); ?>"
                 name="<?php echo esc_attr($this->get_field_name('show_flags')); ?>" value="1">
             <label for="<?php echo esc_attr($this->get_field_id('show_flags')); ?>">
-                <?php esc_html_e('Show flags', 'lg-aitranslator'); ?>
+                <?php esc_html_e('Show flags', 'lifegence-aitranslator'); ?>
             </label>
         </p>
 
@@ -105,7 +105,7 @@ class LG_Language_Switcher_Widget extends WP_Widget {
                 id="<?php echo esc_attr($this->get_field_id('show_native')); ?>"
                 name="<?php echo esc_attr($this->get_field_name('show_native')); ?>" value="1">
             <label for="<?php echo esc_attr($this->get_field_id('show_native')); ?>">
-                <?php esc_html_e('Show native names', 'lg-aitranslator'); ?>
+                <?php esc_html_e('Show native names', 'lifegence-aitranslator'); ?>
             </label>
         </p>
         <?php

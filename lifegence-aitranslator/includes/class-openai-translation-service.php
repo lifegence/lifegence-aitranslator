@@ -1,6 +1,6 @@
 <?php
 /**
- * Gemini Translation Service
+ * OpenAI Translation Service
  *
  * @package LG_AITranslator
  */
@@ -11,9 +11,9 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Google Gemini AI translation service implementation
+ * OpenAI GPT translation service implementation
  */
-class LG_Gemini_Translation_Service extends LG_Abstract_Translation_Service {
+class LG_OpenAI_Translation_Service extends LG_Abstract_Translation_Service {
 
     /**
      * Constructor
@@ -21,11 +21,11 @@ class LG_Gemini_Translation_Service extends LG_Abstract_Translation_Service {
      * @throws Exception If API key is not configured
      */
     public function __construct() {
-        parent::__construct('gemini', 'gemini-1.5-flash');
+        parent::__construct('openai', 'gpt-4o-mini');
     }
 
     /**
-     * Call Gemini API to translate text
+     * Call OpenAI API to translate text
      *
      * @param string $text Text to translate
      * @param string $source_lang Source language code
@@ -38,34 +38,34 @@ class LG_Gemini_Translation_Service extends LG_Abstract_Translation_Service {
         $source_name = $all_languages[$source_lang] ?? $source_lang;
         $target_name = $all_languages[$target_lang] ?? $target_lang;
 
-        // Build prompt
-        $system_message = $this->build_system_message($source_name, $target_name);
-        $prompt = $system_message . "\n\nText to translate:\n" . $text;
-
-        // Make API request
-        $url = sprintf(
-            'https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent?key=%s',
-            $this->model,
-            $this->api_key
+        // Build messages
+        $messages = array(
+            array(
+                'role' => 'system',
+                'content' => $this->build_system_message($source_name, $target_name)
+            ),
+            array(
+                'role' => 'user',
+                'content' => $text
+            )
         );
 
+        // Make API request
+        $url = 'https://api.openai.com/v1/chat/completions';
+
         $body = array(
-            'contents' => array(
-                array(
-                    'parts' => array(
-                        array('text' => $prompt)
-                    )
-                )
-            ),
-            'generationConfig' => array(
-                'temperature' => floatval($this->temperature),
-                'maxOutputTokens' => 8192
-            )
+            'model' => $this->model,
+            'messages' => $messages,
+            'temperature' => floatval($this->temperature),
+            'max_tokens' => 4096
         );
 
         $response = wp_remote_post($url, array(
             'timeout' => 120,
-            'headers' => array('Content-Type' => 'application/json'),
+            'headers' => array(
+                'Authorization' => 'Bearer ' . $this->api_key,
+                'Content-Type' => 'application/json'
+            ),
             'body' => json_encode($body)
         ));
 
@@ -77,16 +77,16 @@ class LG_Gemini_Translation_Service extends LG_Abstract_Translation_Service {
         if ($code !== 200) {
             $error_body = wp_remote_retrieve_body($response);
             /* translators: 1: HTTP status code, 2: Error message from API */
-            throw new Exception(sprintf(__('Gemini API error (code %1$d): %2$s', 'lg-aitranslator'), $code, $error_body)); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+            throw new Exception(sprintf(__('OpenAI API error (code %1$d): %2$s', 'lifegence-aitranslator'), $code, $error_body)); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
         }
 
         $result = json_decode(wp_remote_retrieve_body($response), true);
 
-        if (empty($result['candidates'][0]['content']['parts'][0]['text'])) {
-            throw new Exception(__('Invalid response from Gemini API', 'lg-aitranslator')); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+        if (empty($result['choices'][0]['message']['content'])) {
+            throw new Exception(__('Invalid response from OpenAI API', 'lifegence-aitranslator')); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
         }
 
-        return trim($result['candidates'][0]['content']['parts'][0]['text']);
+        return trim($result['choices'][0]['message']['content']);
     }
 
     /**
@@ -96,6 +96,6 @@ class LG_Gemini_Translation_Service extends LG_Abstract_Translation_Service {
      */
     public function validate_credentials() {
         $key_manager = new LG_API_Key_Manager();
-        return $key_manager->validate_gemini_key($this->api_key);
+        return $key_manager->validate_openai_key($this->api_key);
     }
 }

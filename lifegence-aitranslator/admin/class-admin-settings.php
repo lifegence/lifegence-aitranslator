@@ -43,10 +43,10 @@ class LG_AITranslator_Admin_Settings {
 
                 <div class="lg-aitrans-tabs">
                     <nav class="nav-tab-wrapper">
-                        <a href="#general" class="nav-tab nav-tab-active"><?php esc_html_e('General', 'lg-aitranslator'); ?></a>
-                        <a href="#engine" class="nav-tab"><?php esc_html_e('Translation Engine', 'lg-aitranslator'); ?></a>
-                        <a href="#cache" class="nav-tab"><?php esc_html_e('Cache', 'lg-aitranslator'); ?></a>
-                        <a href="#advanced" class="nav-tab"><?php esc_html_e('Advanced', 'lg-aitranslator'); ?></a>
+                        <a href="#general" class="nav-tab nav-tab-active"><?php esc_html_e('General', 'lifegence-aitranslator'); ?></a>
+                        <a href="#engine" class="nav-tab"><?php esc_html_e('Translation Engine', 'lifegence-aitranslator'); ?></a>
+                        <a href="#cache" class="nav-tab"><?php esc_html_e('Cache', 'lifegence-aitranslator'); ?></a>
+                        <a href="#advanced" class="nav-tab"><?php esc_html_e('Advanced', 'lifegence-aitranslator'); ?></a>
                     </nav>
 
                     <!-- General Tab -->
@@ -70,7 +70,7 @@ class LG_AITranslator_Admin_Settings {
                     </div>
                 </div>
 
-                <?php submit_button(__('Save Settings', 'lg-aitranslator')); ?>
+                <?php submit_button(__('Save Settings', 'lifegence-aitranslator')); ?>
             </form>
         </div>
         <?php
@@ -84,19 +84,19 @@ class LG_AITranslator_Admin_Settings {
         <table class="form-table" role="presentation">
             <tr>
                 <th scope="row">
-                    <label for="enabled"><?php esc_html_e('Enable Translation', 'lg-aitranslator'); ?></label>
+                    <label for="enabled"><?php esc_html_e('Enable Translation', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <label>
                         <input type="checkbox" id="enabled" name="enabled" value="1" <?php checked($settings['enabled'], true); ?>>
-                        <?php esc_html_e('Enable AI translation on your website', 'lg-aitranslator'); ?>
+                        <?php esc_html_e('Enable AI translation on your website', 'lifegence-aitranslator'); ?>
                     </label>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label for="default_language"><?php esc_html_e('Default Language', 'lg-aitranslator'); ?></label>
+                    <label for="default_language"><?php esc_html_e('Default Language', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <select id="default_language" name="default_language" class="regular-text">
@@ -106,17 +106,17 @@ class LG_AITranslator_Admin_Settings {
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <p class="description"><?php esc_html_e('The original language of your website content', 'lg-aitranslator'); ?></p>
+                    <p class="description"><?php esc_html_e('The original language of your website content', 'lifegence-aitranslator'); ?></p>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label><?php esc_html_e('Supported Languages', 'lg-aitranslator'); ?></label>
+                    <label><?php esc_html_e('Supported Languages', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <fieldset>
-                        <legend class="screen-reader-text"><span><?php esc_html_e('Supported Languages', 'lg-aitranslator'); ?></span></legend>
+                        <legend class="screen-reader-text"><span><?php esc_html_e('Supported Languages', 'lifegence-aitranslator'); ?></span></legend>
                         <?php
                         $supported = $settings['supported_languages'] ?? array();
                         foreach (LG_AITranslator::get_all_languages() as $code => $name):
@@ -127,14 +127,14 @@ class LG_AITranslator_Admin_Settings {
                                 <?php echo esc_html($name); ?>
                             </label>
                         <?php endforeach; ?>
-                        <p class="description"><?php esc_html_e('Select languages to enable for translation', 'lg-aitranslator'); ?></p>
+                        <p class="description"><?php esc_html_e('Select languages to enable for translation', 'lifegence-aitranslator'); ?></p>
                     </fieldset>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label><?php esc_html_e('Custom Languages', 'lg-aitranslator'); ?></label>
+                    <label><?php esc_html_e('Custom Languages', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <?php $this->render_custom_languages_section(); ?>
@@ -143,28 +143,28 @@ class LG_AITranslator_Admin_Settings {
 
             <tr>
                 <th scope="row">
-                    <label><?php esc_html_e('Language Switcher', 'lg-aitranslator'); ?></label>
+                    <label><?php esc_html_e('Language Switcher', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
-                    <p><strong><?php esc_html_e('Display language switcher on your site:', 'lg-aitranslator'); ?></strong></p>
+                    <p><strong><?php esc_html_e('Display language switcher on your site:', 'lifegence-aitranslator'); ?></strong></p>
                     <ul style="list-style: disc; margin-left: 20px;">
                         <li>
-                            <strong><?php esc_html_e('Widget:', 'lg-aitranslator'); ?></strong>
-                            <?php esc_html_e('Go to Appearance > Widgets and add "Lifegence Language Switcher"', 'lg-aitranslator'); ?>
+                            <strong><?php esc_html_e('Widget:', 'lifegence-aitranslator'); ?></strong>
+                            <?php esc_html_e('Go to Appearance > Widgets and add "Lifegence Language Switcher"', 'lifegence-aitranslator'); ?>
                         </li>
                         <li>
-                            <strong><?php esc_html_e('Shortcode:', 'lg-aitranslator'); ?></strong>
+                            <strong><?php esc_html_e('Shortcode:', 'lifegence-aitranslator'); ?></strong>
                             <code>[lg_language_switcher]</code>
                             <br>
                             <span class="description">
-                                <?php esc_html_e('Options:', 'lg-aitranslator'); ?>
+                                <?php esc_html_e('Options:', 'lifegence-aitranslator'); ?>
                                 <code>type="dropdown|list|flags"</code>,
                                 <code>flags="yes|no"</code>,
                                 <code>native_names="yes|no"</code>
                             </span>
                             <br>
                             <span class="description">
-                                <?php esc_html_e('Example:', 'lg-aitranslator'); ?>
+                                <?php esc_html_e('Example:', 'lifegence-aitranslator'); ?>
                                 <code>[lg_language_switcher type="flags" flags="yes"]</code>
                             </span>
                         </li>
@@ -183,15 +183,15 @@ class LG_AITranslator_Admin_Settings {
         <table class="form-table" role="presentation">
             <tr>
                 <th scope="row">
-                    <label for="provider"><?php esc_html_e('Translation Provider', 'lg-aitranslator'); ?></label>
+                    <label for="provider"><?php esc_html_e('Translation Provider', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <select id="provider" name="provider" class="regular-text">
                         <option value="gemini" <?php selected($settings['provider'], 'gemini'); ?>>
-                            <?php esc_html_e('Google Gemini (Recommended)', 'lg-aitranslator'); ?>
+                            <?php esc_html_e('Google Gemini (Recommended)', 'lifegence-aitranslator'); ?>
                         </option>
                         <option value="openai" <?php selected($settings['provider'], 'openai'); ?>>
-                            <?php esc_html_e('OpenAI GPT (Premium Quality)', 'lg-aitranslator'); ?>
+                            <?php esc_html_e('OpenAI GPT (Premium Quality)', 'lifegence-aitranslator'); ?>
                         </option>
                     </select>
                 </td>
@@ -200,27 +200,27 @@ class LG_AITranslator_Admin_Settings {
             <!-- Gemini Settings -->
             <tr class="gemini-setting" style="display:none;">
                 <th scope="row">
-                    <label for="gemini_model"><?php esc_html_e('Gemini Model', 'lg-aitranslator'); ?></label>
+                    <label for="gemini_model"><?php esc_html_e('Gemini Model', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <select id="gemini_model" name="gemini_model" class="regular-text">
-                        <optgroup label="<?php esc_html_e('Latest Generation (2.5)', 'lg-aitranslator'); ?>">
+                        <optgroup label="<?php esc_html_e('Latest Generation (2.5)', 'lifegence-aitranslator'); ?>">
                             <option value="gemini-2.5-pro" <?php selected($settings['model'], 'gemini-2.5-pro'); ?>>
-                                <?php esc_html_e('Gemini 2.5 Pro - Advanced reasoning', 'lg-aitranslator'); ?>
+                                <?php esc_html_e('Gemini 2.5 Pro - Advanced reasoning', 'lifegence-aitranslator'); ?>
                             </option>
                             <option value="gemini-2.5-flash" <?php selected($settings['model'], 'gemini-2.5-flash'); ?>>
-                                <?php esc_html_e('Gemini 2.5 Flash - Best value (Recommended)', 'lg-aitranslator'); ?>
+                                <?php esc_html_e('Gemini 2.5 Flash - Best value (Recommended)', 'lifegence-aitranslator'); ?>
                             </option>
                             <option value="gemini-2.5-flash-lite" <?php selected($settings['model'], 'gemini-2.5-flash-lite'); ?>>
-                                <?php esc_html_e('Gemini 2.5 Flash-Lite - Ultra fast', 'lg-aitranslator'); ?>
+                                <?php esc_html_e('Gemini 2.5 Flash-Lite - Ultra fast', 'lifegence-aitranslator'); ?>
                             </option>
                         </optgroup>
-                        <optgroup label="<?php esc_html_e('Previous Generation (2.0)', 'lg-aitranslator'); ?>">
+                        <optgroup label="<?php esc_html_e('Previous Generation (2.0)', 'lifegence-aitranslator'); ?>">
                             <option value="gemini-2.0-flash" <?php selected($settings['model'], 'gemini-2.0-flash'); ?>>
-                                <?php esc_html_e('Gemini 2.0 Flash - 1M context', 'lg-aitranslator'); ?>
+                                <?php esc_html_e('Gemini 2.0 Flash - 1M context', 'lifegence-aitranslator'); ?>
                             </option>
                             <option value="gemini-2.0-flash-lite" <?php selected($settings['model'], 'gemini-2.0-flash-lite'); ?>>
-                                <?php esc_html_e('Gemini 2.0 Flash-Lite - Compact', 'lg-aitranslator'); ?>
+                                <?php esc_html_e('Gemini 2.0 Flash-Lite - Compact', 'lifegence-aitranslator'); ?>
                             </option>
                         </optgroup>
                     </select>
@@ -229,27 +229,27 @@ class LG_AITranslator_Admin_Settings {
 
             <tr class="gemini-setting" style="display:none;">
                 <th scope="row">
-                    <label for="gemini_api_key"><?php esc_html_e('Gemini API Key', 'lg-aitranslator'); ?></label>
+                    <label for="gemini_api_key"><?php esc_html_e('Gemini API Key', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <input type="password" id="gemini_api_key" name="gemini_api_key"
                         value="" class="regular-text"
                         placeholder="<?php echo !empty($settings['gemini_api_key']) ? '••••••••••' : 'AIzaSy...'; ?>">
-                    <button type="button" id="test-gemini-key" class="button"><?php esc_html_e('Test Connection', 'lg-aitranslator'); ?></button>
+                    <button type="button" id="test-gemini-key" class="button"><?php esc_html_e('Test Connection', 'lifegence-aitranslator'); ?></button>
                     <div id="gemini-key-status"></div>
                     <p class="description">
                         <?php
                         /* translators: %s: URL to Google AI Studio */
                         printf(
-                            esc_html__('Get your API key from ', 'lg-aitranslator') . '<a href="%s" target="_blank">Google AI Studio</a>',
+                            esc_html__('Get your API key from ', 'lifegence-aitranslator') . '<a href="%s" target="_blank">Google AI Studio</a>',
                             esc_url('https://aistudio.google.com/app/apikey')
                         );
                         ?>
                         <br>
                         <?php if (!empty($settings['gemini_api_key'])): ?>
-                            <strong style="color: green;">✓ <?php esc_html_e('API key is saved (encrypted). Leave blank to keep existing key.', 'lg-aitranslator'); ?></strong>
+                            <strong style="color: green;">✓ <?php esc_html_e('API key is saved (encrypted). Leave blank to keep existing key.', 'lifegence-aitranslator'); ?></strong>
                         <?php else: ?>
-                            <strong style="color: #d63638;"><?php esc_html_e('No API key saved. Please enter your API key.', 'lg-aitranslator'); ?></strong>
+                            <strong style="color: #d63638;"><?php esc_html_e('No API key saved. Please enter your API key.', 'lifegence-aitranslator'); ?></strong>
                         <?php endif; ?>
                     </p>
                 </td>
@@ -258,18 +258,18 @@ class LG_AITranslator_Admin_Settings {
             <!-- OpenAI Settings -->
             <tr class="openai-setting" style="display:none;">
                 <th scope="row">
-                    <label for="openai_model"><?php esc_html_e('OpenAI Model', 'lg-aitranslator'); ?></label>
+                    <label for="openai_model"><?php esc_html_e('OpenAI Model', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <select id="openai_model" name="openai_model" class="regular-text">
                         <option value="gpt-4o-mini" <?php selected($settings['model'], 'gpt-4o-mini'); ?>>
-                            <?php esc_html_e('GPT-4o Mini (Recommended)', 'lg-aitranslator'); ?>
+                            <?php esc_html_e('GPT-4o Mini (Recommended)', 'lifegence-aitranslator'); ?>
                         </option>
                         <option value="gpt-4o" <?php selected($settings['model'], 'gpt-4o'); ?>>
-                            <?php esc_html_e('GPT-4o (Highest Quality)', 'lg-aitranslator'); ?>
+                            <?php esc_html_e('GPT-4o (Highest Quality)', 'lifegence-aitranslator'); ?>
                         </option>
                         <option value="gpt-3.5-turbo" <?php selected($settings['model'], 'gpt-3.5-turbo'); ?>>
-                            <?php esc_html_e('GPT-3.5 Turbo (Budget)', 'lg-aitranslator'); ?>
+                            <?php esc_html_e('GPT-3.5 Turbo (Budget)', 'lifegence-aitranslator'); ?>
                         </option>
                     </select>
                 </td>
@@ -277,27 +277,27 @@ class LG_AITranslator_Admin_Settings {
 
             <tr class="openai-setting" style="display:none;">
                 <th scope="row">
-                    <label for="openai_api_key"><?php esc_html_e('OpenAI API Key', 'lg-aitranslator'); ?></label>
+                    <label for="openai_api_key"><?php esc_html_e('OpenAI API Key', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <input type="password" id="openai_api_key" name="openai_api_key"
                         value="" class="regular-text"
                         placeholder="<?php echo !empty($settings['openai_api_key']) ? '••••••••••' : 'sk-...'; ?>">
-                    <button type="button" id="test-openai-key" class="button"><?php esc_html_e('Test Connection', 'lg-aitranslator'); ?></button>
+                    <button type="button" id="test-openai-key" class="button"><?php esc_html_e('Test Connection', 'lifegence-aitranslator'); ?></button>
                     <div id="openai-key-status"></div>
                     <p class="description">
                         <?php
                         /* translators: %s: URL to OpenAI Platform */
                         printf(
-                            esc_html__('Get your API key from ', 'lg-aitranslator') . '<a href="%s" target="_blank">OpenAI Platform</a>',
+                            esc_html__('Get your API key from ', 'lifegence-aitranslator') . '<a href="%s" target="_blank">OpenAI Platform</a>',
                             esc_url('https://platform.openai.com/api-keys')
                         );
                         ?>
                         <br>
                         <?php if (!empty($settings['openai_api_key'])): ?>
-                            <strong style="color: green;">✓ <?php esc_html_e('API key is saved (encrypted). Leave blank to keep existing key.', 'lg-aitranslator'); ?></strong>
+                            <strong style="color: green;">✓ <?php esc_html_e('API key is saved (encrypted). Leave blank to keep existing key.', 'lifegence-aitranslator'); ?></strong>
                         <?php else: ?>
-                            <strong style="color: #d63638;"><?php esc_html_e('No API key saved. Please enter your API key.', 'lg-aitranslator'); ?></strong>
+                            <strong style="color: #d63638;"><?php esc_html_e('No API key saved. Please enter your API key.', 'lifegence-aitranslator'); ?></strong>
                         <?php endif; ?>
                     </p>
                 </td>
@@ -305,15 +305,15 @@ class LG_AITranslator_Admin_Settings {
 
             <tr>
                 <th scope="row">
-                    <label for="translation_quality"><?php esc_html_e('Translation Quality', 'lg-aitranslator'); ?></label>
+                    <label for="translation_quality"><?php esc_html_e('Translation Quality', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <select id="translation_quality" name="translation_quality">
                         <option value="standard" <?php selected($settings['translation_quality'], 'standard'); ?>>
-                            <?php esc_html_e('Standard (Faster)', 'lg-aitranslator'); ?>
+                            <?php esc_html_e('Standard (Faster)', 'lifegence-aitranslator'); ?>
                         </option>
                         <option value="high" <?php selected($settings['translation_quality'], 'high'); ?>>
-                            <?php esc_html_e('High (Better Quality)', 'lg-aitranslator'); ?>
+                            <?php esc_html_e('High (Better Quality)', 'lifegence-aitranslator'); ?>
                         </option>
                     </select>
                 </td>
@@ -321,13 +321,13 @@ class LG_AITranslator_Admin_Settings {
 
             <tr class="openai-setting" style="display:none;">
                 <th scope="row">
-                    <label for="translation_temperature"><?php esc_html_e('Temperature', 'lg-aitranslator'); ?></label>
+                    <label for="translation_temperature"><?php esc_html_e('Temperature', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <input type="range" id="translation_temperature" name="translation_temperature"
                         min="0" max="1" step="0.1" value="<?php echo esc_attr($settings['translation_temperature'] ?? 0.3); ?>">
                     <span id="temperature-value">0.3</span>
-                    <p class="description"><?php esc_html_e('Lower = More consistent, Higher = More creative (0.3 recommended)', 'lg-aitranslator'); ?></p>
+                    <p class="description"><?php esc_html_e('Lower = More consistent, Higher = More creative (0.3 recommended)', 'lifegence-aitranslator'); ?></p>
                 </td>
             </tr>
         </table>
@@ -344,44 +344,44 @@ class LG_AITranslator_Admin_Settings {
         <table class="form-table" role="presentation">
             <tr>
                 <th scope="row">
-                    <label for="cache_enabled"><?php esc_html_e('Enable Cache', 'lg-aitranslator'); ?></label>
+                    <label for="cache_enabled"><?php esc_html_e('Enable Cache', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <label>
                         <input type="checkbox" id="cache_enabled" name="cache_enabled" value="1" <?php checked($settings['cache_enabled'], true); ?>>
-                        <?php esc_html_e('Cache translated content (Highly recommended)', 'lg-aitranslator'); ?>
+                        <?php esc_html_e('Cache translated content (Highly recommended)', 'lifegence-aitranslator'); ?>
                     </label>
-                    <p class="description"><?php esc_html_e('Caching reduces API costs by 80-95%', 'lg-aitranslator'); ?></p>
+                    <p class="description"><?php esc_html_e('Caching reduces API costs by 80-95%', 'lifegence-aitranslator'); ?></p>
                 </td>
             </tr>
 
             <tr class="cache-option">
                 <th scope="row">
-                    <label for="cache_ttl"><?php esc_html_e('Cache Duration', 'lg-aitranslator'); ?></label>
+                    <label for="cache_ttl"><?php esc_html_e('Cache Duration', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <select id="cache_ttl" name="cache_ttl">
-                        <option value="3600" <?php selected($settings['cache_ttl'], 3600); ?>><?php esc_html_e('1 Hour', 'lg-aitranslator'); ?></option>
-                        <option value="21600" <?php selected($settings['cache_ttl'], 21600); ?>><?php esc_html_e('6 Hours', 'lg-aitranslator'); ?></option>
-                        <option value="43200" <?php selected($settings['cache_ttl'], 43200); ?>><?php esc_html_e('12 Hours', 'lg-aitranslator'); ?></option>
-                        <option value="86400" <?php selected($settings['cache_ttl'], 86400); ?>><?php esc_html_e('24 Hours (Recommended)', 'lg-aitranslator'); ?></option>
-                        <option value="259200" <?php selected($settings['cache_ttl'], 259200); ?>><?php esc_html_e('3 Days', 'lg-aitranslator'); ?></option>
-                        <option value="604800" <?php selected($settings['cache_ttl'], 604800); ?>><?php esc_html_e('7 Days', 'lg-aitranslator'); ?></option>
+                        <option value="3600" <?php selected($settings['cache_ttl'], 3600); ?>><?php esc_html_e('1 Hour', 'lifegence-aitranslator'); ?></option>
+                        <option value="21600" <?php selected($settings['cache_ttl'], 21600); ?>><?php esc_html_e('6 Hours', 'lifegence-aitranslator'); ?></option>
+                        <option value="43200" <?php selected($settings['cache_ttl'], 43200); ?>><?php esc_html_e('12 Hours', 'lifegence-aitranslator'); ?></option>
+                        <option value="86400" <?php selected($settings['cache_ttl'], 86400); ?>><?php esc_html_e('24 Hours (Recommended)', 'lifegence-aitranslator'); ?></option>
+                        <option value="259200" <?php selected($settings['cache_ttl'], 259200); ?>><?php esc_html_e('3 Days', 'lifegence-aitranslator'); ?></option>
+                        <option value="604800" <?php selected($settings['cache_ttl'], 604800); ?>><?php esc_html_e('7 Days', 'lifegence-aitranslator'); ?></option>
                     </select>
                 </td>
             </tr>
 
             <tr class="cache-option">
                 <th scope="row">
-                    <label for="cache_backend"><?php esc_html_e('Cache Backend', 'lg-aitranslator'); ?></label>
+                    <label for="cache_backend"><?php esc_html_e('Cache Backend', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <select id="cache_backend" name="cache_backend">
                         <option value="transients" <?php selected($settings['cache_backend'], 'transients'); ?>>
-                            <?php esc_html_e('WordPress Transients (Default)', 'lg-aitranslator'); ?>
+                            <?php esc_html_e('WordPress Transients (Default)', 'lifegence-aitranslator'); ?>
                         </option>
                         <option value="redis" <?php selected($settings['cache_backend'], 'redis'); ?>>
-                            <?php esc_html_e('Redis (High-traffic sites)', 'lg-aitranslator'); ?>
+                            <?php esc_html_e('Redis (High-traffic sites)', 'lifegence-aitranslator'); ?>
                         </option>
                     </select>
                 </td>
@@ -389,23 +389,23 @@ class LG_AITranslator_Admin_Settings {
 
             <tr class="cache-option">
                 <th scope="row">
-                    <label><?php esc_html_e('Cache Statistics', 'lg-aitranslator'); ?></label>
+                    <label><?php esc_html_e('Cache Statistics', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
-                    <p><strong><?php esc_html_e('Total Cached Items:', 'lg-aitranslator'); ?></strong> <?php echo esc_html($stats['total_keys']); ?></p>
-                    <p><strong><?php esc_html_e('Total Size:', 'lg-aitranslator'); ?></strong> <?php echo esc_html(size_format($stats['total_size'])); ?></p>
+                    <p><strong><?php esc_html_e('Total Cached Items:', 'lifegence-aitranslator'); ?></strong> <?php echo esc_html($stats['total_keys']); ?></p>
+                    <p><strong><?php esc_html_e('Total Size:', 'lifegence-aitranslator'); ?></strong> <?php echo esc_html(size_format($stats['total_size'])); ?></p>
                     <?php
                     $cache_version = get_option('lg_aitranslator_cache_version', 1);
                     ?>
-                    <p><strong><?php esc_html_e('Cache Version:', 'lg-aitranslator'); ?></strong> <?php echo esc_html($cache_version); ?></p>
+                    <p><strong><?php esc_html_e('Cache Version:', 'lifegence-aitranslator'); ?></strong> <?php echo esc_html($cache_version); ?></p>
                     <p class="description">
-                        <?php esc_html_e('Incrementing the cache version will invalidate all existing translations and force re-translation on next page load.', 'lg-aitranslator'); ?>
+                        <?php esc_html_e('Incrementing the cache version will invalidate all existing translations and force re-translation on next page load.', 'lifegence-aitranslator'); ?>
                     </p>
                     <button type="button" id="increment-cache-version" class="button button-secondary" style="margin-right: 10px;">
-                        <?php esc_html_e('Increment Cache Version (Force Re-translate)', 'lg-aitranslator'); ?>
+                        <?php esc_html_e('Increment Cache Version (Force Re-translate)', 'lifegence-aitranslator'); ?>
                     </button>
                     <button type="button" id="clear-cache" class="button">
-                        <?php esc_html_e('Clear All Cache', 'lg-aitranslator'); ?>
+                        <?php esc_html_e('Clear All Cache', 'lifegence-aitranslator'); ?>
                     </button>
                     <div id="cache-status"></div>
                 </td>
@@ -422,19 +422,19 @@ class LG_AITranslator_Admin_Settings {
         <table class="form-table" role="presentation">
             <tr>
                 <th scope="row">
-                    <label for="rate_limit_enabled"><?php esc_html_e('Rate Limiting', 'lg-aitranslator'); ?></label>
+                    <label for="rate_limit_enabled"><?php esc_html_e('Rate Limiting', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <label>
                         <input type="checkbox" id="rate_limit_enabled" name="rate_limit_enabled" value="1" <?php checked($settings['rate_limit_enabled'], true); ?>>
-                        <?php esc_html_e('Enable rate limiting', 'lg-aitranslator'); ?>
+                        <?php esc_html_e('Enable rate limiting', 'lifegence-aitranslator'); ?>
                     </label>
                 </td>
             </tr>
 
             <tr class="rate-limit-option">
                 <th scope="row">
-                    <label for="rate_limit_per_hour"><?php esc_html_e('Requests per Hour', 'lg-aitranslator'); ?></label>
+                    <label for="rate_limit_per_hour"><?php esc_html_e('Requests per Hour', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <input type="number" id="rate_limit_per_hour" name="rate_limit_per_hour"
@@ -445,24 +445,24 @@ class LG_AITranslator_Admin_Settings {
 
             <tr>
                 <th scope="row">
-                    <label for="monthly_budget_limit"><?php esc_html_e('Monthly Budget (USD)', 'lg-aitranslator'); ?></label>
+                    <label for="monthly_budget_limit"><?php esc_html_e('Monthly Budget (USD)', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <input type="number" id="monthly_budget_limit" name="monthly_budget_limit"
                         value="<?php echo esc_attr($settings['monthly_budget_limit'] ?? 50); ?>"
                         min="0" max="10000" class="small-text">
-                    <p class="description"><?php esc_html_e('Set to 0 to disable budget tracking', 'lg-aitranslator'); ?></p>
+                    <p class="description"><?php esc_html_e('Set to 0 to disable budget tracking', 'lifegence-aitranslator'); ?></p>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label for="auto_disable_on_budget"><?php esc_html_e('Auto-disable on Budget', 'lg-aitranslator'); ?></label>
+                    <label for="auto_disable_on_budget"><?php esc_html_e('Auto-disable on Budget', 'lifegence-aitranslator'); ?></label>
                 </th>
                 <td>
                     <label>
                         <input type="checkbox" id="auto_disable_on_budget" name="auto_disable_on_budget" value="1" <?php checked($settings['auto_disable_on_budget'], true); ?>>
-                        <?php esc_html_e('Switch to cache-only mode when budget is exceeded', 'lg-aitranslator'); ?>
+                        <?php esc_html_e('Switch to cache-only mode when budget is exceeded', 'lifegence-aitranslator'); ?>
                     </label>
                 </td>
             </tr>
@@ -556,7 +556,7 @@ class LG_AITranslator_Admin_Settings {
         add_settings_error(
             'lg_aitranslator_messages',
             'lg_aitranslator_message',
-            __('Settings saved successfully.', 'lg-aitranslator'),
+            __('Settings saved successfully.', 'lifegence-aitranslator'),
             'success'
         );
     }
@@ -572,7 +572,7 @@ class LG_AITranslator_Admin_Settings {
             add_settings_error(
                 'lg_aitranslator_messages',
                 'lg_aitranslator_htaccess_error',
-                __('.htaccess file is not writable. Please check file permissions.', 'lg-aitranslator'),
+                __('.htaccess file is not writable. Please check file permissions.', 'lifegence-aitranslator'),
                 'warning'
             );
             return;
@@ -614,14 +614,14 @@ class LG_AITranslator_Admin_Settings {
             add_settings_error(
                 'lg_aitranslator_messages',
                 'lg_aitranslator_htaccess_success',
-                __('. htaccess file updated with rewrite rules.', 'lg-aitranslator'),
+                __('. htaccess file updated with rewrite rules.', 'lifegence-aitranslator'),
                 'info'
             );
         } else {
             add_settings_error(
                 'lg_aitranslator_messages',
                 'lg_aitranslator_htaccess_error',
-                __('Failed to update .htaccess file.', 'lg-aitranslator'),
+                __('Failed to update .htaccess file.', 'lifegence-aitranslator'),
                 'error'
             );
         }
@@ -664,7 +664,7 @@ class LG_AITranslator_Admin_Settings {
         <div class="lg-custom-languages">
             <div id="lg-custom-language-list" class="lg-custom-lang-list">
                 <?php if (empty($custom)): ?>
-                    <p class="description"><?php esc_html_e('No custom languages added yet.', 'lg-aitranslator'); ?></p>
+                    <p class="description"><?php esc_html_e('No custom languages added yet.', 'lifegence-aitranslator'); ?></p>
                 <?php else: ?>
                     <?php foreach ($custom as $code => $name): ?>
                         <div class="lg-custom-language-item" data-code="<?php echo esc_attr($code); ?>">
@@ -675,7 +675,7 @@ class LG_AITranslator_Admin_Settings {
                                 (<?php echo esc_html($code); ?>)
                             </span>
                             <button type="button" class="button lg-remove-language" data-code="<?php echo esc_attr($code); ?>">
-                                <?php esc_html_e('Remove', 'lg-aitranslator'); ?>
+                                <?php esc_html_e('Remove', 'lifegence-aitranslator'); ?>
                             </button>
                         </div>
                     <?php endforeach; ?>
@@ -686,20 +686,20 @@ class LG_AITranslator_Admin_Settings {
                 <input type="text"
                     id="lg-new-lang-code"
                     class="regular-text"
-                    placeholder="<?php esc_attr_e('Language code (e.g., tl, ms, fil)', 'lg-aitranslator'); ?>"
+                    placeholder="<?php esc_attr_e('Language code (e.g., tl, ms, fil)', 'lifegence-aitranslator'); ?>"
                     style="width: 200px; margin-right: 10px;">
                 <input type="text"
                     id="lg-new-lang-name"
                     class="regular-text"
-                    placeholder="<?php esc_attr_e('Language name (e.g., Tagalog)', 'lg-aitranslator'); ?>"
+                    placeholder="<?php esc_attr_e('Language name (e.g., Tagalog)', 'lifegence-aitranslator'); ?>"
                     style="width: 200px; margin-right: 10px;">
                 <button type="button" id="lg-add-language-btn" class="button">
-                    <?php esc_html_e('Add Custom Language', 'lg-aitranslator'); ?>
+                    <?php esc_html_e('Add Custom Language', 'lifegence-aitranslator'); ?>
                 </button>
             </div>
 
             <p class="description" style="margin-top: 10px;">
-                <?php esc_html_e('Add custom languages not in the preset list. Use standard language codes (e.g., tl for Tagalog, ms for Malay).', 'lg-aitranslator'); ?>
+                <?php esc_html_e('Add custom languages not in the preset list. Use standard language codes (e.g., tl for Tagalog, ms for Malay).', 'lifegence-aitranslator'); ?>
             </p>
         </div>
         <?php
@@ -770,26 +770,26 @@ class LG_AITranslator_Admin_Settings {
         check_ajax_referer('lg_aitranslator_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Permission denied', 'lg-aitranslator')));
+            wp_send_json_error(array('message' => __('Permission denied', 'lifegence-aitranslator')));
         }
 
         $code = isset($_POST['code']) ? sanitize_text_field(wp_unslash($_POST['code'])) : '';
         $name = isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
 
         if (empty($code) || empty($name)) {
-            wp_send_json_error(array('message' => __('Code and name are required', 'lg-aitranslator')));
+            wp_send_json_error(array('message' => __('Code and name are required', 'lifegence-aitranslator')));
         }
 
         $result = LG_AITranslator::add_custom_language($code, $name);
 
         if ($result) {
             wp_send_json_success(array(
-                'message' => __('Language added successfully', 'lg-aitranslator'),
+                'message' => __('Language added successfully', 'lifegence-aitranslator'),
                 'code' => $code,
                 'name' => $name,
             ));
         } else {
-            wp_send_json_error(array('message' => __('Failed to add language', 'lg-aitranslator')));
+            wp_send_json_error(array('message' => __('Failed to add language', 'lifegence-aitranslator')));
         }
     }
 
@@ -800,21 +800,21 @@ class LG_AITranslator_Admin_Settings {
         check_ajax_referer('lg_aitranslator_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(array('message' => __('Permission denied', 'lg-aitranslator')));
+            wp_send_json_error(array('message' => __('Permission denied', 'lifegence-aitranslator')));
         }
 
         $code = isset($_POST['code']) ? sanitize_text_field(wp_unslash($_POST['code'])) : '';
 
         if (empty($code)) {
-            wp_send_json_error(array('message' => __('Code is required', 'lg-aitranslator')));
+            wp_send_json_error(array('message' => __('Code is required', 'lifegence-aitranslator')));
         }
 
         $result = LG_AITranslator::remove_custom_language($code);
 
         if ($result) {
-            wp_send_json_success(array('message' => __('Language removed successfully', 'lg-aitranslator')));
+            wp_send_json_success(array('message' => __('Language removed successfully', 'lifegence-aitranslator')));
         } else {
-            wp_send_json_error(array('message' => __('Failed to remove language', 'lg-aitranslator')));
+            wp_send_json_error(array('message' => __('Failed to remove language', 'lifegence-aitranslator')));
         }
     }
 }

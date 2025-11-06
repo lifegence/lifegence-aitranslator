@@ -19,7 +19,7 @@ Developed by **Lifegence Corporation** (https://lifegence.com)
 
 ## Installation
 
-1. Upload the `lg-aitranslator` folder to `/wp-content/plugins/`
+1. Upload the `lifegence-aitranslator` folder to `/wp-content/plugins/`
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to Settings → Lifegence AITranslator to configure
 
@@ -94,7 +94,7 @@ Add language switcher anywhere using shortcode:
 Translate text programmatically:
 
 ```javascript
-POST /wp-json/lg-aitranslator/v1/translate
+POST /wp-json/lifegence-aitranslator/v1/translate
 {
   "text": "Hello world",
   "target_lang": "ja",
@@ -105,7 +105,7 @@ POST /wp-json/lg-aitranslator/v1/translate
 Get supported languages:
 
 ```javascript
-GET /wp-json/lg-aitranslator/v1/languages
+GET /wp-json/lifegence-aitranslator/v1/languages
 ```
 
 ### PHP Integration
@@ -296,8 +296,8 @@ If an AI translation is incorrect:
 ### File Structure
 
 ```
-lg-aitranslator/
-├── lg-aitranslator.php          # Main plugin file
+lifegence-aitranslator/
+├── lifegence-aitranslator.php   # Main plugin file
 ├── includes/
 │   ├── class-translation-service-interface.php
 │   ├── class-translation-service-factory.php

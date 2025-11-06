@@ -119,7 +119,7 @@ class LG_API_Key_Manager {
 
         if ($code !== 200) {
             $body_data = json_decode($body, true);
-            $error_message = __('Invalid API key or request failed', 'lg-aitranslator');
+            $error_message = __('Invalid API key or request failed', 'lifegence-aitranslator');
 
             if (isset($body_data['error']['message'])) {
                 $error_message = $body_data['error']['message'];
@@ -167,7 +167,7 @@ class LG_API_Key_Manager {
 
         return array(
             'valid' => $code === 200,
-            'error' => $code !== 200 ? __('Invalid API key', 'lg-aitranslator') : null
+            'error' => $code !== 200 ? __('Invalid API key', 'lifegence-aitranslator') : null
         );
     }
 

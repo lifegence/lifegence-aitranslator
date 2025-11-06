@@ -851,7 +851,7 @@ class LG_Content_Translator {
             'href'  => $toggle_url,
             'meta'  => array(
                 'class' => 'lg-aitranslator-edit-toggle',
-                'title' => $is_edit_mode ? __('Exit translation edit mode', 'lg-aitranslator') : __('Edit translations on this page', 'lg-aitranslator')
+                'title' => $is_edit_mode ? __('Exit translation edit mode', 'lifegence-aitranslator') : __('Edit translations on this page', 'lifegence-aitranslator')
             )
         ));
     }
