@@ -2,7 +2,7 @@
 /**
  * Admin AJAX Handlers
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,24 +13,24 @@ if (!defined('ABSPATH')) {
 /**
  * Handle admin AJAX requests
  */
-class LG_AITranslator_Admin_AJAX {
+class LIFEAI_AITranslator_Admin_AJAX {
 
     /**
      * Constructor
      */
     public function __construct() {
-        add_action('wp_ajax_lg_aitrans_test_gemini_key', array($this, 'test_gemini_key'));
-        add_action('wp_ajax_lg_aitrans_test_openai_key', array($this, 'test_openai_key'));
-        add_action('wp_ajax_lg_aitrans_clear_cache', array($this, 'clear_cache'));
-        add_action('wp_ajax_lg_aitrans_increment_cache_version', array($this, 'increment_cache_version'));
-        add_action('wp_ajax_lg_aitrans_update_translation', array($this, 'update_translation'));
+        add_action('wp_ajax_lifeai_aitrans_test_gemini_key', array($this, 'test_gemini_key'));
+        add_action('wp_ajax_lifeai_aitrans_test_openai_key', array($this, 'test_openai_key'));
+        add_action('wp_ajax_lifeai_aitrans_clear_cache', array($this, 'clear_cache'));
+        add_action('wp_ajax_lifeai_aitrans_increment_cache_version', array($this, 'increment_cache_version'));
+        add_action('wp_ajax_lifeai_aitrans_update_translation', array($this, 'update_translation'));
     }
 
     /**
      * Test Gemini API key
      */
     public function test_gemini_key() {
-        check_ajax_referer('lg_aitranslator_admin', 'nonce');
+        check_ajax_referer('lifeai_aitranslator_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array('error' => __('Unauthorized', 'lifegence-aitranslator')));
@@ -42,7 +42,7 @@ class LG_AITranslator_Admin_AJAX {
             wp_send_json_error(array('error' => __('Please enter an API key', 'lifegence-aitranslator')));
         }
 
-        $key_manager = new LG_API_Key_Manager();
+        $key_manager = new LIFEAI_API_Key_Manager();
         $result = $key_manager->validate_gemini_key($api_key);
 
         if ($result['valid']) {
@@ -56,7 +56,7 @@ class LG_AITranslator_Admin_AJAX {
      * Test OpenAI API key
      */
     public function test_openai_key() {
-        check_ajax_referer('lg_aitranslator_admin', 'nonce');
+        check_ajax_referer('lifeai_aitranslator_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array('error' => __('Unauthorized', 'lifegence-aitranslator')));
@@ -68,7 +68,7 @@ class LG_AITranslator_Admin_AJAX {
             wp_send_json_error(array('error' => __('Please enter an API key', 'lifegence-aitranslator')));
         }
 
-        $key_manager = new LG_API_Key_Manager();
+        $key_manager = new LIFEAI_API_Key_Manager();
         $result = $key_manager->validate_openai_key($api_key);
 
         if ($result['valid']) {
@@ -82,13 +82,13 @@ class LG_AITranslator_Admin_AJAX {
      * Clear translation cache
      */
     public function clear_cache() {
-        check_ajax_referer('lg_aitranslator_admin', 'nonce');
+        check_ajax_referer('lifeai_aitranslator_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array('error' => __('Unauthorized', 'lifegence-aitranslator')));
         }
 
-        $cache = new LG_Translation_Cache();
+        $cache = new LIFEAI_Translation_Cache();
         $result = $cache->clear_all();
 
         if ($result) {
@@ -102,16 +102,16 @@ class LG_AITranslator_Admin_AJAX {
      * Increment cache version to invalidate all existing translations
      */
     public function increment_cache_version() {
-        check_ajax_referer('lg_aitranslator_admin', 'nonce');
+        check_ajax_referer('lifeai_aitranslator_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array('error' => __('Unauthorized', 'lifegence-aitranslator')));
         }
 
-        $current_version = get_option('lg_aitranslator_cache_version', 1);
+        $current_version = get_option('lifeai_aitranslator_cache_version', 1);
         $new_version = $current_version + 1;
 
-        $result = update_option('lg_aitranslator_cache_version', $new_version);
+        $result = update_option('lifeai_aitranslator_cache_version', $new_version);
 
         if ($result || $current_version === $new_version) {
             wp_send_json_success(array(
@@ -132,7 +132,7 @@ class LG_AITranslator_Admin_AJAX {
      */
     public function update_translation() {
         // Verify nonce
-        if (!check_ajax_referer('lg_aitranslator_frontend', 'nonce', false)) {
+        if (!check_ajax_referer('lifeai_aitranslator_frontend', 'nonce', false)) {
             wp_send_json_error(array(
                 'error' => __('Security check failed. Please refresh the page and try again.', 'lifegence-aitranslator')
             ), 403);
@@ -168,7 +168,7 @@ class LG_AITranslator_Admin_AJAX {
         }
 
         // Update cache using WordPress transient
-        $cache = new LG_Translation_Cache();
+        $cache = new LIFEAI_Translation_Cache();
         $result = $cache->set($cache_key, $translation);
 
         if ($result) {
@@ -183,4 +183,4 @@ class LG_AITranslator_Admin_AJAX {
 }
 
 // Initialize AJAX handlers
-new LG_AITranslator_Admin_AJAX();
+new LIFEAI_AITranslator_Admin_AJAX();

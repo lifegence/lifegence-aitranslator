@@ -2,7 +2,7 @@
 /**
  * Abstract Translation Service Base Class
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  * Abstract base class for translation services
  * Provides common functionality for all AI translation providers
  */
-abstract class LG_Abstract_Translation_Service implements LG_Translation_Service_Interface {
+abstract class LIFEAI_Abstract_Translation_Service implements LIFEAI_Translation_Service_Interface {
 
     /**
      * API key
@@ -64,14 +64,14 @@ abstract class LG_Abstract_Translation_Service implements LG_Translation_Service
      * @throws Exception If API key is not configured
      */
     protected function __construct($provider_name, $default_model) {
-        $this->settings = get_option('lg_aitranslator_settings', array());
-        $key_manager = new LG_API_Key_Manager();
+        $this->settings = get_option('lifeai_aitranslator_settings', array());
+        $key_manager = new LIFEAI_API_Key_Manager();
 
         $this->api_key = $key_manager->get_api_key($provider_name);
         $this->model = $this->settings['model'] ?? $default_model;
         $this->quality = $this->settings['translation_quality'] ?? 'standard';
         $this->temperature = $this->settings['translation_temperature'] ?? 0.3;
-        $this->cache = new LG_Translation_Cache();
+        $this->cache = new LIFEAI_Translation_Cache();
 
         if (empty($this->api_key)) {
             // phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
@@ -113,7 +113,7 @@ abstract class LG_Abstract_Translation_Service implements LG_Translation_Service
      * @return string Cache key
      */
     protected function generate_cache_key($text, $source_lang, $target_lang, $type = 'text') {
-        $cache_version = get_option('lg_aitranslator_cache_version', 1);
+        $cache_version = get_option('lifeai_aitranslator_cache_version', 1);
         return $type . '_' . md5($text . $source_lang . $target_lang . $cache_version) . '_' . $target_lang;
     }
 
@@ -188,7 +188,7 @@ abstract class LG_Abstract_Translation_Service implements LG_Translation_Service
                     $translations[$original] = $translated_segments[$i] ?? $original;
                 }
             } catch (Exception $e) {
-                LG_Error_Handler::handle_exception($e, 'Batch segment translation failed');
+                LIFEAI_Error_Handler::handle_exception($e, 'Batch segment translation failed');
                 foreach ($batch as $original) {
                     $translations[$original] = $original;
                 }
@@ -246,7 +246,7 @@ abstract class LG_Abstract_Translation_Service implements LG_Translation_Service
      * @return array
      */
     public function get_supported_languages() {
-        return array_keys(LG_AITranslator::get_all_languages());
+        return array_keys(LIFEAI_AITranslator::get_all_languages());
     }
 
     /**

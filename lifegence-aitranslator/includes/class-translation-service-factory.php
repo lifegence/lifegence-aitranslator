@@ -2,7 +2,7 @@
 /**
  * Translation Service Factory
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,24 +13,24 @@ if (!defined('ABSPATH')) {
 /**
  * Factory class for creating translation service instances
  */
-class LG_Translation_Service_Factory {
+class LIFEAI_Translation_Service_Factory {
 
     /**
      * Create translation service instance based on settings
      *
-     * @return LG_Translation_Service_Interface
+     * @return LIFEAI_Translation_Service_Interface
      * @throws Exception If provider is not supported or API key is missing
      */
     public static function create() {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
         $provider = $settings['provider'] ?? 'gemini';
 
         switch ($provider) {
             case 'gemini':
-                return new LG_Gemini_Translation_Service();
+                return new LIFEAI_Gemini_Translation_Service();
 
             case 'openai':
-                return new LG_OpenAI_Translation_Service();
+                return new LIFEAI_OpenAI_Translation_Service();
 
             default:
                 // phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped

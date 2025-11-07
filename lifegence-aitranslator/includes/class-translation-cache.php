@@ -2,7 +2,7 @@
 /**
  * Translation Cache Manager
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,12 +13,12 @@ if (!defined('ABSPATH')) {
 /**
  * Manages translation caching using WordPress transients
  */
-class LG_Translation_Cache {
+class LIFEAI_Translation_Cache {
 
     /**
      * Cache prefix
      */
-    private $prefix = 'lg_aitrans_';
+    private $prefix = 'lifeai_aitrans_';
 
     /**
      * Cache backend type
@@ -39,7 +39,7 @@ class LG_Translation_Cache {
      * Constructor
      */
     public function __construct() {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
 
         $this->enabled = $settings['cache_enabled'] ?? true;
         $this->ttl = $settings['cache_ttl'] ?? 86400; // 24 hours default
@@ -147,8 +147,8 @@ class LG_Translation_Cache {
                 );
 
                 // Increment cache version to invalidate all keys
-                $current_version = get_option('lg_aitranslator_cache_version', 1);
-                update_option('lg_aitranslator_cache_version', $current_version + 1);
+                $current_version = get_option('lifeai_aitranslator_cache_version', 1);
+                update_option('lifeai_aitranslator_cache_version', $current_version + 1);
 
                 return $result !== false;
         }
@@ -303,7 +303,7 @@ class LG_Translation_Cache {
         }
 
         try {
-            $settings = get_option('lg_aitranslator_settings', array());
+            $settings = get_option('lifeai_aitranslator_settings', array());
 
             $redis = new Redis();
             $connected = $redis->connect(

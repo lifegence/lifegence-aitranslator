@@ -58,13 +58,13 @@ jQuery(document).ready(function($) {
             return;
         }
 
-        $btn.prop('disabled', true).text(lgAITranslator.strings.testing);
+        $btn.prop('disabled', true).text(lifeaiAITranslator.strings.testing);
         $status.html('<span style="color:#666;">Validating...</span>');
 
-        $.post(lgAITranslator.ajaxurl, {
-            action: 'lg_aitrans_test_gemini_key',
+        $.post(lifeaiAITranslator.ajaxurl, {
+            action: 'lifeai_aitrans_test_gemini_key',
             api_key: apiKey,
-            nonce: lgAITranslator.nonce
+            nonce: lifeaiAITranslator.nonce
         }, function(response) {
             $btn.prop('disabled', false).text('Test Connection');
 
@@ -90,13 +90,13 @@ jQuery(document).ready(function($) {
             return;
         }
 
-        $btn.prop('disabled', true).text(lgAITranslator.strings.testing);
+        $btn.prop('disabled', true).text(lifeaiAITranslator.strings.testing);
         $status.html('<span style="color:#666;">Validating...</span>');
 
-        $.post(lgAITranslator.ajaxurl, {
-            action: 'lg_aitrans_test_openai_key',
+        $.post(lifeaiAITranslator.ajaxurl, {
+            action: 'lifeai_aitrans_test_openai_key',
             api_key: apiKey,
-            nonce: lgAITranslator.nonce
+            nonce: lifeaiAITranslator.nonce
         }, function(response) {
             $btn.prop('disabled', false).text('Test Connection');
 
@@ -122,9 +122,9 @@ jQuery(document).ready(function($) {
 
         $btn.prop('disabled', true).text('Incrementing...');
 
-        $.post(lgAITranslator.ajaxurl, {
-            action: 'lg_aitrans_increment_cache_version',
-            nonce: lgAITranslator.nonce
+        $.post(lifeaiAITranslator.ajaxurl, {
+            action: 'lifeai_aitrans_increment_cache_version',
+            nonce: lifeaiAITranslator.nonce
         }, function(response) {
             $btn.prop('disabled', false).text('Increment Cache Version (Force Re-translate)');
 
@@ -148,11 +148,11 @@ jQuery(document).ready(function($) {
         var $btn = $(this);
         var $status = $('#cache-status');
 
-        $btn.prop('disabled', true).text(lgAITranslator.strings.clearing);
+        $btn.prop('disabled', true).text(lifeaiAITranslator.strings.clearing);
 
-        $.post(lgAITranslator.ajaxurl, {
-            action: 'lg_aitrans_clear_cache',
-            nonce: lgAITranslator.nonce
+        $.post(lifeaiAITranslator.ajaxurl, {
+            action: 'lifeai_aitrans_clear_cache',
+            nonce: lifeaiAITranslator.nonce
         }, function(response) {
             $btn.prop('disabled', false).text('Clear All Cache');
 

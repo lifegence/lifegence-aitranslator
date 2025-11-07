@@ -2,7 +2,7 @@
 /**
  * URL Rewriter for Language Prefix Support
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 /**
  * Handle URL rewriting and language detection
  */
-class LG_URL_Rewriter {
+class LIFEAI_URL_Rewriter {
 
     /**
      * Current language code
@@ -42,7 +42,7 @@ class LG_URL_Rewriter {
      * Initialize settings
      */
     private function init_settings() {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
         $this->default_language = $settings['default_language'] ?? 'en';
         $this->supported_languages = $settings['supported_languages'] ?? array('en');
     }
@@ -73,23 +73,23 @@ class LG_URL_Rewriter {
         $path = wp_parse_url($request_uri, PHP_URL_PATH);
 
         // Debug logging
-        LG_Error_Handler::debug('URL Rewriter - Original REQUEST_URI', array('uri' => $request_uri, 'path' => $path));
+        LIFEAI_Error_Handler::debug('URL Rewriter - Original REQUEST_URI', array('uri' => $request_uri, 'path' => $path));
 
         // Check if path starts with a language prefix
         $language_pattern = $this->get_language_pattern();
-        LG_Error_Handler::debug('URL Rewriter - Language pattern', array('pattern' => $language_pattern));
+        LIFEAI_Error_Handler::debug('URL Rewriter - Language pattern', array('pattern' => $language_pattern));
 
         if (preg_match('#^/(' . $language_pattern . ')(/|$)#', $path, $matches)) {
             $detected_lang = $matches[1];
-            LG_Error_Handler::debug('URL Rewriter - Detected language', array('lang' => $detected_lang));
+            LIFEAI_Error_Handler::debug('URL Rewriter - Detected language', array('lang' => $detected_lang));
 
             // Validate language
             if (in_array($detected_lang, $this->supported_languages, true)) {
                 // Store detected language globally so other instances can access it
-                $GLOBALS['lg_aitranslator_current_lang'] = $detected_lang;
+                $GLOBALS['lifeai_aitranslator_current_lang'] = $detected_lang;
                 $this->current_language = $detected_lang;
 
-                LG_Error_Handler::debug('URL Rewriter - Language validated', array('lang' => $detected_lang));
+                LIFEAI_Error_Handler::debug('URL Rewriter - Language validated', array('lang' => $detected_lang));
 
                 // Remove language prefix from REQUEST_URI
                 $new_path = preg_replace('#^/' . preg_quote($detected_lang, '#') . '(/|$)#', '/', $path);
@@ -98,12 +98,12 @@ class LG_URL_Rewriter {
                 $query = wp_parse_url($request_uri, PHP_URL_QUERY);
                 $new_request_uri = $new_path . ($query ? '?' . $query : '');
                 $_SERVER['REQUEST_URI'] = $new_request_uri;
-                LG_Error_Handler::debug('URL Rewriter - Updated REQUEST_URI', array('new_uri' => $new_request_uri));
+                LIFEAI_Error_Handler::debug('URL Rewriter - Updated REQUEST_URI', array('new_uri' => $new_request_uri));
             } else {
-                LG_Error_Handler::debug('URL Rewriter - Language not supported', array('lang' => $detected_lang));
+                LIFEAI_Error_Handler::debug('URL Rewriter - Language not supported', array('lang' => $detected_lang));
             }
         } else {
-            LG_Error_Handler::debug('URL Rewriter - No language prefix detected');
+            LIFEAI_Error_Handler::debug('URL Rewriter - No language prefix detected');
         }
     }
 
@@ -132,8 +132,8 @@ class LG_URL_Rewriter {
         }
 
         // Check global variable set by process_language_prefix()
-        if (isset($GLOBALS['lg_aitranslator_current_lang'])) {
-            $this->current_language = $GLOBALS['lg_aitranslator_current_lang'];
+        if (isset($GLOBALS['lifeai_aitranslator_current_lang'])) {
+            $this->current_language = $GLOBALS['lifeai_aitranslator_current_lang'];
             return $this->current_language;
         }
 
@@ -158,8 +158,8 @@ class LG_URL_Rewriter {
         }
 
         // Check cookie as fallback
-        if (isset($_COOKIE['lg_aitranslator_lang'])) {
-            $cookie_lang = sanitize_text_field(wp_unslash($_COOKIE['lg_aitranslator_lang']));
+        if (isset($_COOKIE['lifeai_aitranslator_lang'])) {
+            $cookie_lang = sanitize_text_field(wp_unslash($_COOKIE['lifeai_aitranslator_lang']));
             if (in_array($cookie_lang, $this->supported_languages, true)) {
                 $this->current_language = $cookie_lang;
                 return $this->current_language;

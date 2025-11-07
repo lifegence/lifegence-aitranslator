@@ -3,7 +3,7 @@
  * Simple admin test runner (without WordPress test suite)
  * Run: php tests/simple-admin-test.php
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Mock WordPress functions
@@ -59,9 +59,9 @@ global $_test_options, $_POST;
 $_test_options = array();
 $_POST = array();
 
-// Define LG_AITranslator class if not already loaded
-if ( ! class_exists( 'LG_AITranslator' ) ) {
-	class LG_AITranslator {
+// Define LIFEAI_AITranslator class if not already loaded
+if ( ! class_exists( 'LIFEAI_AITranslator' ) ) {
+	class LIFEAI_AITranslator {
 		public static $languages = array(
 			'en' => 'English',
 			'ja' => '日本語',
@@ -92,7 +92,7 @@ if ( ! class_exists( 'LG_AITranslator' ) ) {
 }
 
 // Mock admin settings class
-class LG_AITranslator_Admin_Settings {
+class LIFEAI_AITranslator_Admin_Settings {
 
 	/**
 	 * Save custom languages from POST data
@@ -112,7 +112,7 @@ class LG_AITranslator_Admin_Settings {
 			}
 
 			// Validate code
-			if ( ! LG_AITranslator::validate_language_code( $code ) ) {
+			if ( ! LIFEAI_AITranslator::validate_language_code( $code ) ) {
 				continue;
 			}
 
@@ -128,14 +128,14 @@ class LG_AITranslator_Admin_Settings {
 			$custom_languages[ $code ] = $name;
 		}
 
-		return update_option( 'lg_aitranslator_custom_languages', $custom_languages );
+		return update_option( 'lifeai_aitranslator_custom_languages', $custom_languages );
 	}
 
 	/**
 	 * Render custom languages section
 	 */
 	public function render_custom_languages_section() {
-		$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+		$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 		?>
 		<div class="lg-custom-languages">
 			<h3>Custom Languages</h3>
@@ -157,7 +157,7 @@ class LG_AITranslator_Admin_Settings {
 	 * @return array
 	 */
 	public function get_custom_languages_data() {
-		$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+		$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 		$data = array();
 
 		foreach ( $custom as $code => $name ) {
@@ -200,7 +200,7 @@ class LG_AITranslator_Admin_Settings {
 			'supported_languages' => $_POST['supported_languages'] ?? array(),
 		);
 
-		return update_option( 'lg_aitranslator_settings', $settings );
+		return update_option( 'lifeai_aitranslator_settings', $settings );
 	}
 }
 
@@ -269,7 +269,7 @@ class SimpleTestRunner {
 echo "Running Admin Custom Language Tests...\n\n";
 
 $test = new SimpleTestRunner();
-$admin = new LG_AITranslator_Admin_Settings();
+$admin = new LIFEAI_AITranslator_Admin_Settings();
 
 // Test 1: save_custom_languages() saves valid data
 echo "Test: save_custom_languages() saves valid data\n";
@@ -277,9 +277,9 @@ $_POST = array(
 	'custom_language_codes' => array( 'tl', 'ms', 'fil' ),
 	'custom_language_names' => array( 'Tagalog', 'Malay', 'Filipino' ),
 );
-delete_option( 'lg_aitranslator_custom_languages' );
+delete_option( 'lifeai_aitranslator_custom_languages' );
 $result = $admin->save_custom_languages();
-$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 $test->assert_true( $result, 'save_custom_languages() returns true' );
 $test->assert_count( 3, $custom, 'Should save 3 custom languages' );
 $test->assert_equals( 'Tagalog', $custom['tl'], 'Tagalog name is correct' );
@@ -291,9 +291,9 @@ $_POST = array(
 	'custom_language_codes' => array( 'tl', 'invalid code', 'ms' ),
 	'custom_language_names' => array( 'Tagalog', 'Invalid', 'Malay' ),
 );
-delete_option( 'lg_aitranslator_custom_languages' );
+delete_option( 'lifeai_aitranslator_custom_languages' );
 $admin->save_custom_languages();
-$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 $test->assert_count( 2, $custom, 'Should only save 2 valid languages' );
 $test->assert_array_has_key( 'tl', $custom, 'Tagalog should be saved' );
 $test->assert_array_not_has_key( 'invalid code', $custom, 'Invalid code should be filtered' );
@@ -305,9 +305,9 @@ $_POST = array(
 	'custom_language_codes' => array( 'tl', 'ms', 'fil' ),
 	'custom_language_names' => array( 'Tagalog', '', 'Filipino' ),
 );
-delete_option( 'lg_aitranslator_custom_languages' );
+delete_option( 'lifeai_aitranslator_custom_languages' );
 $admin->save_custom_languages();
-$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 $test->assert_count( 2, $custom, 'Should only save languages with names' );
 $test->assert_array_not_has_key( 'ms', $custom, 'Empty name should be filtered' );
 echo "\n";
@@ -318,27 +318,27 @@ $_POST = array(
 	'custom_language_codes' => array( 'tl' ),
 	'custom_language_names' => array( '<script>alert("xss")</script>Tagalog' ),
 );
-delete_option( 'lg_aitranslator_custom_languages' );
+delete_option( 'lifeai_aitranslator_custom_languages' );
 $admin->save_custom_languages();
-$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 $test->assert_string_not_contains( '<script>', $custom['tl'], 'HTML should be stripped' );
 echo "\n";
 
 // Test 5: save_custom_languages() handles empty arrays
 echo "Test: save_custom_languages() handles empty arrays\n";
-update_option( 'lg_aitranslator_custom_languages', array( 'tl' => 'Tagalog' ) );
+update_option( 'lifeai_aitranslator_custom_languages', array( 'tl' => 'Tagalog' ) );
 $_POST = array(
 	'custom_language_codes' => array(),
 	'custom_language_names' => array(),
 );
 $admin->save_custom_languages();
-$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 $test->assert_count( 0, $custom, 'Should clear custom languages' );
 echo "\n";
 
 // Test 6: render_custom_languages_section() outputs HTML
 echo "Test: render_custom_languages_section() outputs HTML\n";
-update_option( 'lg_aitranslator_custom_languages', array(
+update_option( 'lifeai_aitranslator_custom_languages', array(
 	'tl' => 'Tagalog',
 	'ms' => 'Malay',
 ) );
@@ -352,7 +352,7 @@ echo "\n";
 
 // Test 7: get_custom_languages_data() format
 echo "Test: get_custom_languages_data() returns correct format\n";
-update_option( 'lg_aitranslator_custom_languages', array(
+update_option( 'lifeai_aitranslator_custom_languages', array(
 	'tl' => 'Tagalog',
 	'ms' => 'Malay',
 ) );

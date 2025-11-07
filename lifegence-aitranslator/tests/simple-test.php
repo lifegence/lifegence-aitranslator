@@ -3,7 +3,7 @@
  * Simple test runner (without WordPress test suite)
  * Run: php tests/simple-test.php
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Mock WordPress functions for testing
@@ -32,8 +32,8 @@ function sanitize_text_field( $str ) {
 global $_test_options;
 $_test_options = array();
 
-// Load only the LG_AITranslator class definition
-class LG_AITranslator {
+// Load only the LIFEAI_AITranslator class definition
+class LIFEAI_AITranslator {
 	private static $instance = null;
 
 	public static $languages = array(
@@ -61,12 +61,12 @@ class LG_AITranslator {
 
 	public static function get_all_languages() {
 		$preset = self::$languages;
-		$custom = get_option('lg_aitranslator_custom_languages', array());
+		$custom = get_option('lifeai_aitranslator_custom_languages', array());
 		return array_merge($preset, $custom);
 	}
 
 	public static function get_custom_languages() {
-		return get_option('lg_aitranslator_custom_languages', array());
+		return get_option('lifeai_aitranslator_custom_languages', array());
 	}
 
 	public static function is_preset_language($code) {
@@ -87,21 +87,21 @@ class LG_AITranslator {
 			return false;
 		}
 
-		$custom = get_option('lg_aitranslator_custom_languages', array());
+		$custom = get_option('lifeai_aitranslator_custom_languages', array());
 		$custom[$code] = $name;
 
-		return update_option('lg_aitranslator_custom_languages', $custom);
+		return update_option('lifeai_aitranslator_custom_languages', $custom);
 	}
 
 	public static function remove_custom_language($code) {
-		$custom = get_option('lg_aitranslator_custom_languages', array());
+		$custom = get_option('lifeai_aitranslator_custom_languages', array());
 
 		if (!isset($custom[$code])) {
 			return false;
 		}
 
 		unset($custom[$code]);
-		return update_option('lg_aitranslator_custom_languages', $custom);
+		return update_option('lifeai_aitranslator_custom_languages', $custom);
 	}
 }
 
@@ -157,7 +157,7 @@ $test = new SimpleTestRunner();
 
 // Test 1: get_all_languages() returns preset languages
 echo "Test: get_all_languages() returns preset languages\n";
-$languages = LG_AITranslator::get_all_languages();
+$languages = LIFEAI_AITranslator::get_all_languages();
 $test->assert_true( isset( $languages['en'] ), 'English (en) exists' );
 $test->assert_true( isset( $languages['ja'] ), 'Japanese (ja) exists' );
 $test->assert_equals( 'English', $languages['en'], 'English name is correct' );
@@ -165,18 +165,18 @@ echo "\n";
 
 // Test 2: get_all_languages() with no custom languages
 echo "Test: get_all_languages() with no custom languages\n";
-delete_option( 'lg_aitranslator_custom_languages' );
-$languages = LG_AITranslator::get_all_languages();
+delete_option( 'lifeai_aitranslator_custom_languages' );
+$languages = LIFEAI_AITranslator::get_all_languages();
 $test->assert_count( 20, $languages, 'Should have 20 preset languages' );
 echo "\n";
 
 // Test 3: get_all_languages() merges custom languages
 echo "Test: get_all_languages() merges custom languages\n";
-update_option( 'lg_aitranslator_custom_languages', array(
+update_option( 'lifeai_aitranslator_custom_languages', array(
 	'tl' => 'Tagalog',
 	'ms' => 'Malay',
 ) );
-$languages = LG_AITranslator::get_all_languages();
+$languages = LIFEAI_AITranslator::get_all_languages();
 $test->assert_count( 22, $languages, 'Should have 22 languages (20 preset + 2 custom)' );
 $test->assert_true( isset( $languages['tl'] ), 'Tagalog (tl) exists' );
 $test->assert_equals( 'Tagalog', $languages['tl'], 'Tagalog name is correct' );
@@ -184,40 +184,40 @@ echo "\n";
 
 // Test 4: add_custom_language()
 echo "Test: add_custom_language()\n";
-delete_option( 'lg_aitranslator_custom_languages' );
-$result = LG_AITranslator::add_custom_language( 'fil', 'Filipino' );
+delete_option( 'lifeai_aitranslator_custom_languages' );
+$result = LIFEAI_AITranslator::add_custom_language( 'fil', 'Filipino' );
 $test->assert_true( $result, 'add_custom_language() returns true' );
-$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 $test->assert_true( isset( $custom['fil'] ), 'Filipino was added' );
 $test->assert_equals( 'Filipino', $custom['fil'], 'Filipino name is correct' );
 echo "\n";
 
 // Test 5: validate_language_code()
 echo "Test: validate_language_code()\n";
-$test->assert_true( LG_AITranslator::validate_language_code( 'en' ), 'Simple code is valid' );
-$test->assert_true( LG_AITranslator::validate_language_code( 'zh-CN' ), 'Code with hyphen is valid' );
-$test->assert_true( LG_AITranslator::validate_language_code( 'pt_BR' ), 'Code with underscore is valid' );
-$test->assert_false( LG_AITranslator::validate_language_code( '' ), 'Empty code is invalid' );
-$test->assert_false( LG_AITranslator::validate_language_code( 'en us' ), 'Code with space is invalid' );
-$test->assert_false( LG_AITranslator::validate_language_code( 'en@us' ), 'Code with special char is invalid' );
+$test->assert_true( LIFEAI_AITranslator::validate_language_code( 'en' ), 'Simple code is valid' );
+$test->assert_true( LIFEAI_AITranslator::validate_language_code( 'zh-CN' ), 'Code with hyphen is valid' );
+$test->assert_true( LIFEAI_AITranslator::validate_language_code( 'pt_BR' ), 'Code with underscore is valid' );
+$test->assert_false( LIFEAI_AITranslator::validate_language_code( '' ), 'Empty code is invalid' );
+$test->assert_false( LIFEAI_AITranslator::validate_language_code( 'en us' ), 'Code with space is invalid' );
+$test->assert_false( LIFEAI_AITranslator::validate_language_code( 'en@us' ), 'Code with special char is invalid' );
 echo "\n";
 
 // Test 6: remove_custom_language()
 echo "Test: remove_custom_language()\n";
-LG_AITranslator::add_custom_language( 'tl', 'Tagalog' );
-LG_AITranslator::add_custom_language( 'ms', 'Malay' );
-$result = LG_AITranslator::remove_custom_language( 'tl' );
+LIFEAI_AITranslator::add_custom_language( 'tl', 'Tagalog' );
+LIFEAI_AITranslator::add_custom_language( 'ms', 'Malay' );
+$result = LIFEAI_AITranslator::remove_custom_language( 'tl' );
 $test->assert_true( $result, 'remove_custom_language() returns true' );
-$custom = LG_AITranslator::get_custom_languages();
+$custom = LIFEAI_AITranslator::get_custom_languages();
 $test->assert_false( isset( $custom['tl'] ), 'Tagalog was removed' );
 $test->assert_true( isset( $custom['ms'] ), 'Malay still exists' );
 echo "\n";
 
 // Test 7: is_preset_language()
 echo "Test: is_preset_language()\n";
-$test->assert_true( LG_AITranslator::is_preset_language( 'en' ), 'English is preset' );
-$test->assert_true( LG_AITranslator::is_preset_language( 'ja' ), 'Japanese is preset' );
-$test->assert_false( LG_AITranslator::is_preset_language( 'tl' ), 'Tagalog is not preset' );
+$test->assert_true( LIFEAI_AITranslator::is_preset_language( 'en' ), 'English is preset' );
+$test->assert_true( LIFEAI_AITranslator::is_preset_language( 'ja' ), 'Japanese is preset' );
+$test->assert_false( LIFEAI_AITranslator::is_preset_language( 'tl' ), 'Tagalog is not preset' );
 echo "\n";
 
 // Summary

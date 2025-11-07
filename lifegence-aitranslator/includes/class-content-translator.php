@@ -2,7 +2,7 @@
 /**
  * Content Translator
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 /**
  * Translate WordPress content using AI
  */
-class LG_Content_Translator {
+class LIFEAI_Content_Translator {
 
     /**
      * Minimum translatable text length
@@ -54,9 +54,9 @@ class LG_Content_Translator {
      * Constructor
      */
     public function __construct() {
-        $this->url_rewriter = new LG_URL_Rewriter();
-        $this->cache = new LG_Translation_Cache();
-        $this->settings = get_option('lg_aitranslator_settings', array());
+        $this->url_rewriter = new LIFEAI_URL_Rewriter();
+        $this->cache = new LIFEAI_Translation_Cache();
+        $this->settings = get_option('lifeai_aitranslator_settings', array());
 
         $this->init_translation_service();
         $this->init_hooks();
@@ -66,7 +66,7 @@ class LG_Content_Translator {
      * Initialize translation service
      */
     private function init_translation_service() {
-        $this->translation_service = LG_Translation_Service_Factory::create();
+        $this->translation_service = LIFEAI_Translation_Service_Factory::create();
     }
 
     /**
@@ -110,7 +110,7 @@ class LG_Content_Translator {
      */
     private function is_edit_mode() {
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public query parameter for edit mode, permission checked with current_user_can
-        return isset($_GET['lg_aitrans_edit']) && sanitize_text_field(wp_unslash($_GET['lg_aitrans_edit'])) === '1' && current_user_can('manage_options');
+        return isset($_GET['lifeai_aitrans_edit']) && sanitize_text_field(wp_unslash($_GET['lifeai_aitrans_edit'])) === '1' && current_user_can('manage_options');
     }
 
     /**
@@ -127,9 +127,9 @@ class LG_Content_Translator {
 
         // Debug: Log language detection
         $request_uri = isset($_SERVER['REQUEST_URI']) ? sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI'])) : '';
-        LG_Error_Handler::debug('Output buffer started', array(
+        LIFEAI_Error_Handler::debug('Output buffer started', array(
             'current_lang' => $current_lang,
-            'global_var' => isset($GLOBALS['lg_aitranslator_current_lang']) ? $GLOBALS['lg_aitranslator_current_lang'] : 'NOT SET',
+            'global_var' => isset($GLOBALS['lifeai_aitranslator_current_lang']) ? $GLOBALS['lifeai_aitranslator_current_lang'] : 'NOT SET',
             'request_uri' => $request_uri,
             'query_var_lang' => get_query_var('lang')
         ));
@@ -258,7 +258,7 @@ class LG_Content_Translator {
             return $html;
         }
 
-        LG_Error_Handler::debug('Starting HTML translation', array(
+        LIFEAI_Error_Handler::debug('Starting HTML translation', array(
             'target_lang' => $target_lang,
             'html_length' => strlen($html)
         ));
@@ -267,7 +267,7 @@ class LG_Content_Translator {
         $html_without_scripts = preg_replace('/<script\b[^>]*>.*?<\/script>/is', '<!--SCRIPT_REMOVED-->', $html);
         $html_without_scripts = preg_replace('/<style\b[^>]*>.*?<\/style>/is', '<!--STYLE_REMOVED-->', $html_without_scripts);
 
-        LG_Error_Handler::debug('HTML cleaned', array(
+        LIFEAI_Error_Handler::debug('HTML cleaned', array(
             'cleaned_length' => strlen($html_without_scripts)
         ));
 
@@ -279,7 +279,7 @@ class LG_Content_Translator {
 
         preg_match_all($pattern, $html_without_scripts, $matches);
 
-        LG_Error_Handler::debug('Text nodes found', array(
+        LIFEAI_Error_Handler::debug('Text nodes found', array(
             'potential_nodes' => count($matches[1])
         ));
 
@@ -332,7 +332,7 @@ class LG_Content_Translator {
             }
         }
 
-        LG_Error_Handler::debug('Text extraction completed', array(
+        LIFEAI_Error_Handler::debug('Text extraction completed', array(
             'extracted_count' => $extracted_count,
             'need_translation' => count($text_nodes),
             'samples' => $samples
@@ -340,13 +340,13 @@ class LG_Content_Translator {
 
         // Batch translate all uncached text nodes
         if (!empty($text_nodes)) {
-            LG_Error_Handler::debug('Starting batch translation', array(
+            LIFEAI_Error_Handler::debug('Starting batch translation', array(
                 'text_count' => count($text_nodes)
             ));
 
             $batch_translations = $this->batch_translate_texts($text_nodes, $target_lang);
 
-            LG_Error_Handler::debug('Batch translation completed', array(
+            LIFEAI_Error_Handler::debug('Batch translation completed', array(
                 'results_count' => count($batch_translations)
             ));
 
@@ -362,7 +362,7 @@ class LG_Content_Translator {
 
         // Replace all text nodes with translations in the ORIGINAL HTML (not cleaned)
         if (!empty($placeholders)) {
-            LG_Error_Handler::debug('Replacing text nodes with translations', array(
+            LIFEAI_Error_Handler::debug('Replacing text nodes with translations', array(
                 'placeholder_count' => count($placeholders)
             ));
 
@@ -384,7 +384,7 @@ class LG_Content_Translator {
             }
         }
 
-        LG_Error_Handler::debug('HTML translation completed');
+        LIFEAI_Error_Handler::debug('HTML translation completed');
         return $html;
     }
 
@@ -398,13 +398,13 @@ class LG_Content_Translator {
 
         // Translate ALL texts in a SINGLE API call to avoid rate limits
         // This uses only 1 API request per page instead of multiple
-        LG_Error_Handler::debug('Batch translating texts in single API call', array(
+        LIFEAI_Error_Handler::debug('Batch translating texts in single API call', array(
             'text_count' => count($texts)
         ));
 
         $results = $this->batch_translate_chunk($texts, $target_lang);
 
-        LG_Error_Handler::debug('Batch translation returned results', array(
+        LIFEAI_Error_Handler::debug('Batch translation returned results', array(
             'results_count' => count($results)
         ));
 
@@ -438,7 +438,7 @@ class LG_Content_Translator {
 
             return $results;
         } catch (Exception $e) {
-            LG_Error_Handler::handle_exception($e, 'Batch translation failed');
+            LIFEAI_Error_Handler::handle_exception($e, 'Batch translation failed');
 
             // Return originals on error
             $results = array();
@@ -728,7 +728,7 @@ class LG_Content_Translator {
 
             return $translated;
         } catch (Exception $e) {
-            LG_Error_Handler::handle_exception($e, 'Translation failed');
+            LIFEAI_Error_Handler::handle_exception($e, 'Translation failed');
             return $text; // Return original on error
         }
     }
@@ -741,7 +741,7 @@ class LG_Content_Translator {
             $default_lang = $this->url_rewriter->get_default_language();
             return $this->translation_service->translate_html($html, $default_lang, $target_lang);
         } catch (Exception $e) {
-            LG_Error_Handler::handle_exception($e, 'HTML translation failed');
+            LIFEAI_Error_Handler::handle_exception($e, 'HTML translation failed');
             return $html; // Return original on error
         }
     }
@@ -750,7 +750,7 @@ class LG_Content_Translator {
      * Generate cache key (unified with translation services)
      */
     private function generate_cache_key($type, $id, $lang, $content) {
-        $cache_version = get_option('lg_aitranslator_cache_version', 1);
+        $cache_version = get_option('lifeai_aitranslator_cache_version', 1);
         $hash = md5($content . $cache_version);
         return "{$type}_{$hash}_{$lang}";
     }
@@ -837,11 +837,11 @@ class LG_Content_Translator {
 
         if ($is_edit_mode) {
             // Remove edit parameter
-            $toggle_url = remove_query_arg('lg_aitrans_edit', $current_url);
+            $toggle_url = remove_query_arg('lifeai_aitrans_edit', $current_url);
             $title = '✏️ 編集モード: ON';
         } else {
             // Add edit parameter
-            $toggle_url = add_query_arg('lg_aitrans_edit', '1', $current_url);
+            $toggle_url = add_query_arg('lifeai_aitrans_edit', '1', $current_url);
             $title = '✏️ 翻訳を編集';
         }
 

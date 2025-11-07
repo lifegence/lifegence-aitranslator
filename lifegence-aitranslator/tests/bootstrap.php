@@ -2,7 +2,7 @@
 /**
  * PHPUnit Bootstrap
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // WordPress test suite directory

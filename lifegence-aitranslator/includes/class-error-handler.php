@@ -2,7 +2,7 @@
 /**
  * Error Handler
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 /**
  * Centralized error handling and logging
  */
-class LG_Error_Handler {
+class LIFEAI_Error_Handler {
 
     /**
      * Error log prefix
@@ -80,7 +80,7 @@ class LG_Error_Handler {
             return;
         }
 
-        $notices = get_transient('lg_aitranslator_admin_notices') ?: array();
+        $notices = get_transient('lifeai_aitranslator_admin_notices') ?: array();
 
         $notices[] = array(
             'message' => $message,
@@ -93,7 +93,7 @@ class LG_Error_Handler {
             $notices = array_slice($notices, -10);
         }
 
-        set_transient('lg_aitranslator_admin_notices', $notices, HOUR_IN_SECONDS);
+        set_transient('lifeai_aitranslator_admin_notices', $notices, HOUR_IN_SECONDS);
     }
 
     /**
@@ -104,7 +104,7 @@ class LG_Error_Handler {
             return;
         }
 
-        $notices = get_transient('lg_aitranslator_admin_notices');
+        $notices = get_transient('lifeai_aitranslator_admin_notices');
         if (empty($notices)) {
             return;
         }
@@ -123,7 +123,7 @@ class LG_Error_Handler {
         }
 
         // Clear notices after displaying
-        delete_transient('lg_aitranslator_admin_notices');
+        delete_transient('lifeai_aitranslator_admin_notices');
     }
 
     /**

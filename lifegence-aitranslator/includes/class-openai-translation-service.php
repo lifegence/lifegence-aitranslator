@@ -2,7 +2,7 @@
 /**
  * OpenAI Translation Service
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 /**
  * OpenAI GPT translation service implementation
  */
-class LG_OpenAI_Translation_Service extends LG_Abstract_Translation_Service {
+class LIFEAI_OpenAI_Translation_Service extends LIFEAI_Abstract_Translation_Service {
 
     /**
      * Constructor
@@ -34,7 +34,7 @@ class LG_OpenAI_Translation_Service extends LG_Abstract_Translation_Service {
      * @throws Exception If translation fails
      */
     protected function call_translation_api($text, $source_lang, $target_lang) {
-        $all_languages = LG_AITranslator::get_all_languages();
+        $all_languages = LIFEAI_AITranslator::get_all_languages();
         $source_name = $all_languages[$source_lang] ?? $source_lang;
         $target_name = $all_languages[$target_lang] ?? $target_lang;
 
@@ -95,7 +95,7 @@ class LG_OpenAI_Translation_Service extends LG_Abstract_Translation_Service {
      * @return array
      */
     public function validate_credentials() {
-        $key_manager = new LG_API_Key_Manager();
+        $key_manager = new LIFEAI_API_Key_Manager();
         return $key_manager->validate_openai_key($this->api_key);
     }
 }

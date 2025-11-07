@@ -17,15 +17,15 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('LG_AITRANS_VERSION', '1.0.0');
-define('LG_AITRANS_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('LG_AITRANS_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('LG_AITRANS_PLUGIN_FILE', __FILE__);
+define('LIFEAI_AITRANS_VERSION', '1.0.0');
+define('LIFEAI_AITRANS_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('LIFEAI_AITRANS_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('LIFEAI_AITRANS_PLUGIN_FILE', __FILE__);
 
 /**
  * Main plugin class
  */
-class LG_AITranslator {
+class LIFEAI_AITranslator {
 
     /**
      * Singleton instance
@@ -75,7 +75,7 @@ class LG_AITranslator {
      */
     public static function get_all_languages() {
         $preset = self::$languages;
-        $custom = get_option('lg_aitranslator_custom_languages', array());
+        $custom = get_option('lifeai_aitranslator_custom_languages', array());
 
         // Merge custom languages (custom can override preset)
         return array_merge($preset, $custom);
@@ -87,7 +87,7 @@ class LG_AITranslator {
      * @return array Associative array of custom language codes and names
      */
     public static function get_custom_languages() {
-        return get_option('lg_aitranslator_custom_languages', array());
+        return get_option('lifeai_aitranslator_custom_languages', array());
     }
 
     /**
@@ -131,13 +131,13 @@ class LG_AITranslator {
         }
 
         // Get existing custom languages
-        $custom = get_option('lg_aitranslator_custom_languages', array());
+        $custom = get_option('lifeai_aitranslator_custom_languages', array());
 
         // Add new language
         $custom[$code] = $name;
 
         // Save
-        return update_option('lg_aitranslator_custom_languages', $custom);
+        return update_option('lifeai_aitranslator_custom_languages', $custom);
     }
 
     /**
@@ -147,7 +147,7 @@ class LG_AITranslator {
      * @return bool True on success, false if not found
      */
     public static function remove_custom_language($code) {
-        $custom = get_option('lg_aitranslator_custom_languages', array());
+        $custom = get_option('lifeai_aitranslator_custom_languages', array());
 
         if (!isset($custom[$code])) {
             return false;
@@ -155,7 +155,7 @@ class LG_AITranslator {
 
         unset($custom[$code]);
 
-        return update_option('lg_aitranslator_custom_languages', $custom);
+        return update_option('lifeai_aitranslator_custom_languages', $custom);
     }
 
     /**
@@ -171,29 +171,29 @@ class LG_AITranslator {
      */
     private function load_dependencies() {
         // Error handler (load first)
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-error-handler.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-error-handler.php';
 
         // Core classes
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-translation-service-interface.php';
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-abstract-translation-service.php';
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-translation-service-factory.php';
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-gemini-translation-service.php';
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-openai-translation-service.php';
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-translation-cache.php';
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-api-key-manager.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-translation-service-interface.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-abstract-translation-service.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-translation-service-factory.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-gemini-translation-service.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-openai-translation-service.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-translation-cache.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-api-key-manager.php';
 
         // URL rewriting and translation
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-url-rewriter.php';
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-content-translator.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-url-rewriter.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-content-translator.php';
 
         // Admin classes
         if (is_admin()) {
-            require_once LG_AITRANS_PLUGIN_DIR . 'admin/class-admin-settings.php';
-            require_once LG_AITRANS_PLUGIN_DIR . 'admin/class-admin-ajax.php';
+            require_once LIFEAI_AITRANS_PLUGIN_DIR . 'admin/class-admin-settings.php';
+            require_once LIFEAI_AITRANS_PLUGIN_DIR . 'admin/class-admin-ajax.php';
         }
 
         // Widget
-        require_once LG_AITRANS_PLUGIN_DIR . 'includes/class-language-switcher-widget.php';
+        require_once LIFEAI_AITRANS_PLUGIN_DIR . 'includes/class-language-switcher-widget.php';
     }
 
     /**
@@ -213,14 +213,14 @@ class LG_AITranslator {
         // Admin hooks
         add_action('admin_menu', array($this, 'add_admin_menu'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
-        add_action('admin_notices', array('LG_Error_Handler', 'display_admin_notices'));
+        add_action('admin_notices', array('LIFEAI_Error_Handler', 'display_admin_notices'));
 
         // Frontend hooks
         add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_scripts'));
         add_action('widgets_init', array($this, 'register_widgets'));
 
         // Shortcodes
-        add_shortcode('lg-translator', array($this, 'language_switcher_shortcode'));
+        add_shortcode('lifeai-translator', array($this, 'language_switcher_shortcode'));
 
         // REST API
         add_action('rest_api_init', array($this, 'register_rest_routes'));
@@ -231,17 +231,17 @@ class LG_AITranslator {
      */
     public function init_translation_system() {
         // Initialize URL rewriter (must be early)
-        new LG_URL_Rewriter();
+        new LIFEAI_URL_Rewriter();
 
         // Initialize content translator
-        new LG_Content_Translator();
+        new LIFEAI_Content_Translator();
     }
 
     /**
      * Add rewrite rules for language URLs
      */
     public function add_rewrite_rules() {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
         $languages = $settings['supported_languages'] ?? array('en', 'ja', 'zh-CN', 'es', 'fr');
 
         // Create regex pattern for supported languages
@@ -251,14 +251,14 @@ class LG_AITranslator {
         // This ensures /ja/anything gets routed to WordPress
         add_rewrite_rule(
             '^(' . $lang_pattern . ')(/(.*))?/?$',
-            'index.php?lang=$matches[1]&lg_translated_path=$matches[3]',
+            'index.php?lang=$matches[1]&lifeai_translated_path=$matches[3]',
             'top'
         );
 
         // Register query vars
         add_filter('query_vars', function($vars) {
             $vars[] = 'lang';
-            $vars[] = 'lg_translated_path';
+            $vars[] = 'lifeai_translated_path';
             return $vars;
         });
     }
@@ -283,9 +283,9 @@ class LG_AITranslator {
             'auto_disable_on_budget' => false
         );
 
-        add_option('lg_aitranslator_settings', $default_settings);
-        add_option('lg_aitranslator_version', LG_AITRANS_VERSION);
-        add_option('lg_aitranslator_cache_version', 1);
+        add_option('lifeai_aitranslator_settings', $default_settings);
+        add_option('lifeai_aitranslator_version', LIFEAI_AITRANS_VERSION);
+        add_option('lifeai_aitranslator_cache_version', 1);
 
         // Flush rewrite rules to ensure language URLs work properly
         flush_rewrite_rules();
@@ -316,11 +316,11 @@ class LG_AITranslator {
      * Render admin settings page
      */
     public function render_admin_page() {
-        if (!class_exists('LG_AITranslator_Admin_Settings')) {
+        if (!class_exists('LIFEAI_AITranslator_Admin_Settings')) {
             return;
         }
 
-        $admin_settings = new LG_AITranslator_Admin_Settings();
+        $admin_settings = new LIFEAI_AITranslator_Admin_Settings();
         $admin_settings->render();
     }
 
@@ -334,22 +334,22 @@ class LG_AITranslator {
 
         wp_enqueue_style(
             'lifegence-aitranslator-admin',
-            LG_AITRANS_PLUGIN_URL . 'admin/css/admin.css',
+            LIFEAI_AITRANS_PLUGIN_URL . 'admin/css/admin.css',
             array(),
-            LG_AITRANS_VERSION
+            LIFEAI_AITRANS_VERSION
         );
 
         wp_enqueue_script(
             'lifegence-aitranslator-admin',
-            LG_AITRANS_PLUGIN_URL . 'admin/js/admin.js',
+            LIFEAI_AITRANS_PLUGIN_URL . 'admin/js/admin.js',
             array('jquery'),
-            LG_AITRANS_VERSION,
+            LIFEAI_AITRANS_VERSION,
             true
         );
 
-        wp_localize_script('lifegence-aitranslator-admin', 'lgAITranslator', array(
+        wp_localize_script('lifegence-aitranslator-admin', 'lifeaiAITranslator', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('lg_aitranslator_admin'),
+            'nonce' => wp_create_nonce('lifeai_aitranslator_admin'),
             'strings' => array(
                 'testing' => __('Testing...', 'lifegence-aitranslator'),
                 'clearing' => __('Clearing...', 'lifegence-aitranslator'),
@@ -363,7 +363,7 @@ class LG_AITranslator {
      * Enqueue frontend scripts and styles
      */
     public function enqueue_frontend_scripts() {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
 
         if (empty($settings['enabled'])) {
             return;
@@ -371,23 +371,23 @@ class LG_AITranslator {
 
         wp_enqueue_style(
             'lifegence-aitranslator-frontend',
-            LG_AITRANS_PLUGIN_URL . 'assets/css/frontend.css',
+            LIFEAI_AITRANS_PLUGIN_URL . 'assets/css/frontend.css',
             array(),
-            LG_AITRANS_VERSION
+            LIFEAI_AITRANS_VERSION
         );
 
         wp_enqueue_script(
             'lifegence-aitranslator-frontend',
-            LG_AITRANS_PLUGIN_URL . 'assets/js/frontend.js',
+            LIFEAI_AITRANS_PLUGIN_URL . 'assets/js/frontend.js',
             array('jquery'),
-            LG_AITRANS_VERSION,
+            LIFEAI_AITRANS_VERSION,
             true
         );
 
-        wp_localize_script('lifegence-aitranslator-frontend', 'lgAITranslatorFrontend', array(
+        wp_localize_script('lifegence-aitranslator-frontend', 'lifeaiAITranslatorFrontend', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'resturl' => rest_url('lifegence-aitranslator/v1/'),
-            'nonce' => wp_create_nonce('lg_aitranslator_frontend'),
+            'nonce' => wp_create_nonce('lifeai_aitranslator_frontend'),
             'currentLang' => $this->get_current_language(),
             'defaultLang' => $settings['default_language'] ?? 'en'
         ));
@@ -397,7 +397,7 @@ class LG_AITranslator {
      * Register widgets
      */
     public function register_widgets() {
-        register_widget('LG_Language_Switcher_Widget');
+        register_widget('LIFEAI_Language_Switcher_Widget');
     }
 
     /**
@@ -410,7 +410,7 @@ class LG_AITranslator {
             'native_names' => 'yes'
         ), $atts);
 
-        $widget = new LG_Language_Switcher_Widget();
+        $widget = new LIFEAI_Language_Switcher_Widget();
         return $widget->render_switcher($atts);
     }
 
@@ -473,7 +473,7 @@ class LG_AITranslator {
      * REST API: Translate text
      */
     public function rest_translate($request) {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
 
         if (empty($settings['enabled'])) {
             return new WP_Error('disabled', __('Translation service is disabled', 'lifegence-aitranslator'), array('status' => 403));
@@ -488,7 +488,7 @@ class LG_AITranslator {
         }
 
         try {
-            $service = LG_Translation_Service_Factory::create();
+            $service = LIFEAI_Translation_Service_Factory::create();
             $translation = $service->translate_text($text, $source_lang, $target_lang);
 
             return array(
@@ -506,7 +506,7 @@ class LG_AITranslator {
      * REST API: Get supported languages
      */
     public function rest_get_languages($request) {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
         $supported = $settings['supported_languages'] ?? array();
 
         $languages = array();
@@ -527,12 +527,12 @@ class LG_AITranslator {
      * Get current language
      */
     private function get_current_language() {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
         $default = $settings['default_language'] ?? 'en';
 
         // Check cookie
-        if (isset($_COOKIE['lg_aitranslator_lang'])) {
-            return sanitize_text_field(wp_unslash($_COOKIE['lg_aitranslator_lang']));
+        if (isset($_COOKIE['lifeai_aitranslator_lang'])) {
+            return sanitize_text_field(wp_unslash($_COOKIE['lifeai_aitranslator_lang']));
         }
 
         // Check query parameter
@@ -548,7 +548,7 @@ class LG_AITranslator {
 
 // Initialize the plugin
 function lg_aitranslator() {
-    return LG_AITranslator::get_instance();
+    return LIFEAI_AITranslator::get_instance();
 }
 
 // Start the plugin

@@ -2,7 +2,7 @@
 /**
  * API Key Manager
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 /**
  * Manages API key encryption and validation
  */
-class LG_API_Key_Manager {
+class LIFEAI_API_Key_Manager {
 
     /**
      * Encryption key
@@ -105,7 +105,7 @@ class LG_API_Key_Manager {
         ));
 
         if (is_wp_error($response)) {
-            LG_Error_Handler::debug('Gemini API validation error', array('error' => $response->get_error_message()));
+            LIFEAI_Error_Handler::debug('Gemini API validation error', array('error' => $response->get_error_message()));
             return array(
                 'valid' => false,
                 'error' => $response->get_error_message()
@@ -115,7 +115,7 @@ class LG_API_Key_Manager {
         $code = wp_remote_retrieve_response_code($response);
         $body = wp_remote_retrieve_body($response);
 
-        LG_Error_Handler::debug('Gemini API validation response', array('code' => $code, 'body_preview' => substr($body, 0, 500)));
+        LIFEAI_Error_Handler::debug('Gemini API validation response', array('code' => $code, 'body_preview' => substr($body, 0, 500)));
 
         if ($code !== 200) {
             $body_data = json_decode($body, true);
@@ -178,7 +178,7 @@ class LG_API_Key_Manager {
      * @return string Decrypted API key
      */
     public function get_api_key($provider) {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
         $key_field = $provider . '_api_key';
 
         if (empty($settings[$key_field])) {
@@ -195,7 +195,7 @@ class LG_API_Key_Manager {
      * @param string $api_key API key to store
      */
     public function store_api_key($provider, $api_key) {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
         $key_field = $provider . '_api_key';
 
         if (!empty($api_key)) {
@@ -203,6 +203,6 @@ class LG_API_Key_Manager {
             $settings[$key_field . '_display'] = substr($api_key, 0, 10) . '...';
         }
 
-        update_option('lg_aitranslator_settings', $settings);
+        update_option('lifeai_aitranslator_settings', $settings);
     }
 }

@@ -2,7 +2,7 @@
 /**
  * Admin Custom Languages UI Test
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 /**
@@ -26,20 +26,20 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 		wp_set_current_user( $user_id );
 
 		// Clean up options
-		delete_option( 'lg_aitranslator_custom_languages' );
-		delete_option( 'lg_aitranslator_settings' );
+		delete_option( 'lifeai_aitranslator_custom_languages' );
+		delete_option( 'lifeai_aitranslator_settings' );
 
 		// Initialize admin settings
-		require_once LG_AITRANS_PLUGIN_DIR . 'admin/class-admin-settings.php';
-		$this->admin_settings = new LG_AITranslator_Admin_Settings();
+		require_once LIFEAI_AITRANS_PLUGIN_DIR . 'admin/class-admin-settings.php';
+		$this->admin_settings = new LIFEAI_AITranslator_Admin_Settings();
 	}
 
 	/**
 	 * Clean up after tests
 	 */
 	public function tearDown(): void {
-		delete_option( 'lg_aitranslator_custom_languages' );
-		delete_option( 'lg_aitranslator_settings' );
+		delete_option( 'lifeai_aitranslator_custom_languages' );
+		delete_option( 'lifeai_aitranslator_settings' );
 		parent::tearDown();
 	}
 
@@ -66,7 +66,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 
 		$this->assertTrue( $result );
 
-		$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+		$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 		$this->assertCount( 3, $custom );
 		$this->assertEquals( 'Tagalog', $custom['tl'] );
 		$this->assertEquals( 'Malay', $custom['ms'] );
@@ -84,7 +84,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 
 		$result = $this->admin_settings->save_custom_languages();
 
-		$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+		$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 		$this->assertCount( 2, $custom ); // Only 2 valid languages
 		$this->assertArrayHasKey( 'tl', $custom );
 		$this->assertArrayHasKey( 'ms', $custom );
@@ -102,7 +102,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 
 		$result = $this->admin_settings->save_custom_languages();
 
-		$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+		$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 		$this->assertCount( 2, $custom ); // Only 2 with valid names
 		$this->assertArrayHasKey( 'tl', $custom );
 		$this->assertArrayHasKey( 'fil', $custom );
@@ -120,7 +120,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 
 		$result = $this->admin_settings->save_custom_languages();
 
-		$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+		$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 		$this->assertStringNotContainsString( '<script>', $custom['tl'] );
 		$this->assertStringNotContainsString( 'alert', $custom['tl'] );
 	}
@@ -130,7 +130,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 	 */
 	public function test_save_custom_languages_handles_empty_arrays() {
 		// First add some custom languages
-		update_option( 'lg_aitranslator_custom_languages', array(
+		update_option( 'lifeai_aitranslator_custom_languages', array(
 			'tl' => 'Tagalog',
 			'ms' => 'Malay',
 		) );
@@ -143,7 +143,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 
 		$result = $this->admin_settings->save_custom_languages();
 
-		$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+		$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 		$this->assertEmpty( $custom );
 	}
 
@@ -158,7 +158,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 
 		$result = $this->admin_settings->save_custom_languages();
 
-		$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+		$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 		// Should only save the one with both code and name
 		$this->assertCount( 1, $custom );
 		$this->assertEquals( 'Tagalog', $custom['tl'] );
@@ -192,7 +192,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 	 */
 	public function test_render_custom_languages_section_displays_existing() {
 		// Add custom languages
-		update_option( 'lg_aitranslator_custom_languages', array(
+		update_option( 'lifeai_aitranslator_custom_languages', array(
 			'tl' => 'Tagalog',
 			'ms' => 'Malay',
 		) );
@@ -211,7 +211,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 	 * Test get_custom_languages_data() returns correct format
 	 */
 	public function test_get_custom_languages_data_format() {
-		update_option( 'lg_aitranslator_custom_languages', array(
+		update_option( 'lifeai_aitranslator_custom_languages', array(
 			'tl' => 'Tagalog',
 			'ms' => 'Malay',
 		) );
@@ -263,7 +263,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 
 		$result = $this->admin_settings->save_custom_languages();
 
-		$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+		$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 
 		// Should only have 2 languages (last 'tl' overwrites first)
 		$this->assertCount( 2, $custom );
@@ -276,7 +276,7 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 	 */
 	public function test_integration_with_settings_save() {
 		$_POST = array(
-			'lg_aitranslator_settings_nonce' => wp_create_nonce( 'lg_aitranslator_settings' ),
+			'lifeai_aitranslator_settings_nonce' => wp_create_nonce( 'lifeai_aitranslator_settings' ),
 			'enabled' => '1',
 			'default_language' => 'en',
 			'supported_languages' => array( 'en', 'ja' ),
@@ -287,8 +287,8 @@ class Test_Admin_Custom_Languages extends WP_UnitTestCase {
 		// This should save both regular settings and custom languages
 		$this->admin_settings->save_settings();
 
-		$settings = get_option( 'lg_aitranslator_settings', array() );
-		$custom = get_option( 'lg_aitranslator_custom_languages', array() );
+		$settings = get_option( 'lifeai_aitranslator_settings', array() );
+		$custom = get_option( 'lifeai_aitranslator_custom_languages', array() );
 
 		$this->assertTrue( $settings['enabled'] );
 		$this->assertEquals( 'Tagalog', $custom['tl'] );

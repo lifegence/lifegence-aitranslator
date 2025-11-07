@@ -10,13 +10,13 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.lg-lang-link, .lg-lang-flag-link', function(e) {
         var lang = $(this).data('lang');
         // Set cookie for language preference
-        document.cookie = 'lg_aitranslator_lang=' + lang + '; path=/; max-age=31536000';
+        document.cookie = 'lifeai_aitranslator_lang=' + lang + '; path=/; max-age=31536000';
         // Let the href handle navigation (already set to correct URL)
     });
 
     function changeLanguage(lang) {
         // Set cookie for preference
-        document.cookie = 'lg_aitranslator_lang=' + lang + '; path=/; max-age=31536000';
+        document.cookie = 'lifeai_aitranslator_lang=' + lang + '; path=/; max-age=31536000';
 
         // Build new URL with language prefix
         var currentPath = window.location.pathname;
@@ -27,7 +27,7 @@ jQuery(document).ready(function($) {
         currentPath = currentPath.replace(langPattern, '/');
 
         // Add new language prefix (skip for default language)
-        var defaultLang = lgAITranslatorFrontend.defaultLang;
+        var defaultLang = lifeaiAITranslatorFrontend.defaultLang;
         if (lang !== defaultLang) {
             newPath = '/' + lang + currentPath;
         } else {
@@ -48,11 +48,11 @@ jQuery(document).ready(function($) {
             return match[1];
         }
 
-        return lgAITranslatorFrontend.defaultLang;
+        return lifeaiAITranslatorFrontend.defaultLang;
     }
 
     // Translation Edit Mode
-    if (window.location.search.includes('lg_aitrans_edit=1')) {
+    if (window.location.search.includes('lifeai_aitrans_edit=1')) {
         // Edit button click handler
         $(document).on('click', '.lg-aitrans-edit-btn', function(e) {
             e.preventDefault();
@@ -101,11 +101,11 @@ jQuery(document).ready(function($) {
 
                 $saveBtn.prop('disabled', true).text('💾 保存中...');
 
-                $.post(lgAITranslatorFrontend.ajaxurl, {
-                    action: 'lg_aitrans_update_translation',
+                $.post(lifeaiAITranslatorFrontend.ajaxurl, {
+                    action: 'lifeai_aitrans_update_translation',
                     cache_key: cacheKey,
                     translation: newTranslation,
-                    nonce: lgAITranslatorFrontend.nonce
+                    nonce: lifeaiAITranslatorFrontend.nonce
                 }, function(response) {
                     if (response.success) {
                         // Update display

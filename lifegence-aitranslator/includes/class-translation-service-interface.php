@@ -2,7 +2,7 @@
 /**
  * Translation Service Interface
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 /**
  * Interface for translation services
  */
-interface LG_Translation_Service_Interface {
+interface LIFEAI_Translation_Service_Interface {
 
     /**
      * Translate text from source to target language

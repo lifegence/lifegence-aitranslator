@@ -2,7 +2,7 @@
 /**
  * Admin Settings Page
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 /**
  * Admin settings page handler
  */
-class LG_AITranslator_Admin_Settings {
+class LIFEAI_AITranslator_Admin_Settings {
 
     /**
      * Render settings page
@@ -25,21 +25,21 @@ class LG_AITranslator_Admin_Settings {
 
         // Handle form submission
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce is verified inside save_settings()
-        if (isset($_POST['lg_aitranslator_settings_nonce'])) {
+        if (isset($_POST['lifeai_aitranslator_settings_nonce'])) {
             $this->save_settings();
         }
 
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
         $this->load_defaults($settings);
 
         ?>
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
-            <?php settings_errors('lg_aitranslator_messages'); ?>
+            <?php settings_errors('lifeai_aitranslator_messages'); ?>
 
             <form method="post" action="">
-                <?php wp_nonce_field('lg_aitranslator_settings', 'lg_aitranslator_settings_nonce'); ?>
+                <?php wp_nonce_field('lifeai_aitranslator_settings', 'lifeai_aitranslator_settings_nonce'); ?>
 
                 <div class="lg-aitrans-tabs">
                     <nav class="nav-tab-wrapper">
@@ -100,7 +100,7 @@ class LG_AITranslator_Admin_Settings {
                 </th>
                 <td>
                     <select id="default_language" name="default_language" class="regular-text">
-                        <?php foreach (LG_AITranslator::get_all_languages() as $code => $name): ?>
+                        <?php foreach (LIFEAI_AITranslator::get_all_languages() as $code => $name): ?>
                             <option value="<?php echo esc_attr($code); ?>" <?php selected($settings['default_language'], $code); ?>>
                                 <?php echo esc_html($name); ?> (<?php echo esc_html($code); ?>)
                             </option>
@@ -119,7 +119,7 @@ class LG_AITranslator_Admin_Settings {
                         <legend class="screen-reader-text"><span><?php esc_html_e('Supported Languages', 'lifegence-aitranslator'); ?></span></legend>
                         <?php
                         $supported = $settings['supported_languages'] ?? array();
-                        foreach (LG_AITranslator::get_all_languages() as $code => $name):
+                        foreach (LIFEAI_AITranslator::get_all_languages() as $code => $name):
                         ?>
                             <label style="display: inline-block; width: 200px; margin-bottom: 5px;">
                                 <input type="checkbox" name="supported_languages[]" value="<?php echo esc_attr($code); ?>"
@@ -154,7 +154,7 @@ class LG_AITranslator_Admin_Settings {
                         </li>
                         <li>
                             <strong><?php esc_html_e('Shortcode:', 'lifegence-aitranslator'); ?></strong>
-                            <code>[lg_language_switcher]</code>
+                            <code>[lifeai_language_switcher]</code>
                             <br>
                             <span class="description">
                                 <?php esc_html_e('Options:', 'lifegence-aitranslator'); ?>
@@ -165,7 +165,7 @@ class LG_AITranslator_Admin_Settings {
                             <br>
                             <span class="description">
                                 <?php esc_html_e('Example:', 'lifegence-aitranslator'); ?>
-                                <code>[lg_language_switcher type="flags" flags="yes"]</code>
+                                <code>[lifeai_language_switcher type="flags" flags="yes"]</code>
                             </span>
                         </li>
                     </ul>
@@ -338,7 +338,7 @@ class LG_AITranslator_Admin_Settings {
      * Render cache settings
      */
     private function render_cache_settings($settings) {
-        $cache = new LG_Translation_Cache();
+        $cache = new LIFEAI_Translation_Cache();
         $stats = $cache->get_stats();
         ?>
         <table class="form-table" role="presentation">
@@ -395,7 +395,7 @@ class LG_AITranslator_Admin_Settings {
                     <p><strong><?php esc_html_e('Total Cached Items:', 'lifegence-aitranslator'); ?></strong> <?php echo esc_html($stats['total_keys']); ?></p>
                     <p><strong><?php esc_html_e('Total Size:', 'lifegence-aitranslator'); ?></strong> <?php echo esc_html(size_format($stats['total_size'])); ?></p>
                     <?php
-                    $cache_version = get_option('lg_aitranslator_cache_version', 1);
+                    $cache_version = get_option('lifeai_aitranslator_cache_version', 1);
                     ?>
                     <p><strong><?php esc_html_e('Cache Version:', 'lifegence-aitranslator'); ?></strong> <?php echo esc_html($cache_version); ?></p>
                     <p class="description">
@@ -475,8 +475,8 @@ class LG_AITranslator_Admin_Settings {
      */
     private function save_settings() {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce is verified on the next line
-        if (!isset($_POST['lg_aitranslator_settings_nonce']) ||
-            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['lg_aitranslator_settings_nonce'])), 'lg_aitranslator_settings')) {
+        if (!isset($_POST['lifeai_aitranslator_settings_nonce']) ||
+            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['lifeai_aitranslator_settings_nonce'])), 'lifeai_aitranslator_settings')) {
             return;
         }
 
@@ -502,8 +502,8 @@ class LG_AITranslator_Admin_Settings {
         }
 
         // API keys - only update if non-empty value provided
-        $key_manager = new LG_API_Key_Manager();
-        $old_settings = get_option('lg_aitranslator_settings', array());
+        $key_manager = new LIFEAI_API_Key_Manager();
+        $old_settings = get_option('lifeai_aitranslator_settings', array());
 
         // Handle Gemini API key
         if (!empty($_POST['gemini_api_key'])) {
@@ -542,7 +542,7 @@ class LG_AITranslator_Admin_Settings {
         $settings['monthly_budget_limit'] = floatval($_POST['monthly_budget_limit'] ?? 50);
         $settings['auto_disable_on_budget'] = isset($_POST['auto_disable_on_budget']);
 
-        update_option('lg_aitranslator_settings', $settings);
+        update_option('lifeai_aitranslator_settings', $settings);
 
         // Save custom languages
         $this->save_custom_languages();
@@ -554,8 +554,8 @@ class LG_AITranslator_Admin_Settings {
         flush_rewrite_rules();
 
         add_settings_error(
-            'lg_aitranslator_messages',
-            'lg_aitranslator_message',
+            'lifeai_aitranslator_messages',
+            'lifeai_aitranslator_message',
             __('Settings saved successfully.', 'lifegence-aitranslator'),
             'success'
         );
@@ -570,8 +570,8 @@ class LG_AITranslator_Admin_Settings {
         // Check if .htaccess is writable using WP_Filesystem
         if (!file_exists($htaccess_file) || !wp_is_writable($htaccess_file)) {
             add_settings_error(
-                'lg_aitranslator_messages',
-                'lg_aitranslator_htaccess_error',
+                'lifeai_aitranslator_messages',
+                'lifeai_aitranslator_htaccess_error',
                 __('.htaccess file is not writable. Please check file permissions.', 'lifegence-aitranslator'),
                 'warning'
             );
@@ -596,13 +596,13 @@ class LG_AITranslator_Admin_Settings {
         $lang_pattern = implode('|', array_map('preg_quote', $languages));
 
         // Create rewrite rules
-        $rewrite_rules = "# BEGIN LG-AITranslator\n";
+        $rewrite_rules = "# BEGIN Lifegence AITranslator\n";
         $rewrite_rules .= "<IfModule mod_rewrite.c>\n";
         $rewrite_rules .= "RewriteEngine On\n";
         $rewrite_rules .= "RewriteBase /\n";
-        $rewrite_rules .= "RewriteRule ^($lang_pattern)(/(.*))?/?$ index.php?lang=\$1&lg_translated_path=\$3 [L,QSA]\n";
+        $rewrite_rules .= "RewriteRule ^($lang_pattern)(/(.*))?/?$ index.php?lang=\$1&lifeai_translated_path=\$3 [L,QSA]\n";
         $rewrite_rules .= "</IfModule>\n";
-        $rewrite_rules .= "# END LG-AITranslator\n\n";
+        $rewrite_rules .= "# END Lifegence AITranslator\n\n";
 
         // Prepend our rules to existing content
         $new_htaccess = $rewrite_rules . $htaccess_content;
@@ -612,15 +612,15 @@ class LG_AITranslator_Admin_Settings {
 
         if ($result !== false) {
             add_settings_error(
-                'lg_aitranslator_messages',
-                'lg_aitranslator_htaccess_success',
+                'lifeai_aitranslator_messages',
+                'lifeai_aitranslator_htaccess_success',
                 __('. htaccess file updated with rewrite rules.', 'lifegence-aitranslator'),
                 'info'
             );
         } else {
             add_settings_error(
-                'lg_aitranslator_messages',
-                'lg_aitranslator_htaccess_error',
+                'lifeai_aitranslator_messages',
+                'lifeai_aitranslator_htaccess_error',
                 __('Failed to update .htaccess file.', 'lifegence-aitranslator'),
                 'error'
             );
@@ -659,7 +659,7 @@ class LG_AITranslator_Admin_Settings {
      * Render custom languages section
      */
     private function render_custom_languages_section() {
-        $custom = LG_AITranslator::get_custom_languages();
+        $custom = LIFEAI_AITranslator::get_custom_languages();
         ?>
         <div class="lg-custom-languages">
             <div id="lg-custom-language-list" class="lg-custom-lang-list">
@@ -725,7 +725,7 @@ class LG_AITranslator_Admin_Settings {
             }
 
             // Validate code
-            if (!LG_AITranslator::validate_language_code($code)) {
+            if (!LIFEAI_AITranslator::validate_language_code($code)) {
                 continue;
             }
 
@@ -741,7 +741,7 @@ class LG_AITranslator_Admin_Settings {
             $custom_languages[$code] = $name;
         }
 
-        return update_option('lg_aitranslator_custom_languages', $custom_languages);
+        return update_option('lifeai_aitranslator_custom_languages', $custom_languages);
     }
 
     /**
@@ -750,7 +750,7 @@ class LG_AITranslator_Admin_Settings {
      * @return array
      */
     private function get_custom_languages_data() {
-        $custom = LG_AITranslator::get_custom_languages();
+        $custom = LIFEAI_AITranslator::get_custom_languages();
         $data = array();
 
         foreach ($custom as $code => $name) {
@@ -767,7 +767,7 @@ class LG_AITranslator_Admin_Settings {
      * AJAX handler for adding custom language
      */
     public function ajax_add_custom_language() {
-        check_ajax_referer('lg_aitranslator_admin', 'nonce');
+        check_ajax_referer('lifeai_aitranslator_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array('message' => __('Permission denied', 'lifegence-aitranslator')));
@@ -780,7 +780,7 @@ class LG_AITranslator_Admin_Settings {
             wp_send_json_error(array('message' => __('Code and name are required', 'lifegence-aitranslator')));
         }
 
-        $result = LG_AITranslator::add_custom_language($code, $name);
+        $result = LIFEAI_AITranslator::add_custom_language($code, $name);
 
         if ($result) {
             wp_send_json_success(array(
@@ -797,7 +797,7 @@ class LG_AITranslator_Admin_Settings {
      * AJAX handler for removing custom language
      */
     public function ajax_remove_custom_language() {
-        check_ajax_referer('lg_aitranslator_admin', 'nonce');
+        check_ajax_referer('lifeai_aitranslator_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(array('message' => __('Permission denied', 'lifegence-aitranslator')));
@@ -809,7 +809,7 @@ class LG_AITranslator_Admin_Settings {
             wp_send_json_error(array('message' => __('Code is required', 'lifegence-aitranslator')));
         }
 
-        $result = LG_AITranslator::remove_custom_language($code);
+        $result = LIFEAI_AITranslator::remove_custom_language($code);
 
         if ($result) {
             wp_send_json_success(array('message' => __('Language removed successfully', 'lifegence-aitranslator')));

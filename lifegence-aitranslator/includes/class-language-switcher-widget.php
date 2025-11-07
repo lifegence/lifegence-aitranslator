@@ -2,7 +2,7 @@
 /**
  * Language Switcher Widget
  *
- * @package LG_AITranslator
+ * @package LIFEAI_AITranslator
  */
 
 // Exit if accessed directly
@@ -13,14 +13,14 @@ if (!defined('ABSPATH')) {
 /**
  * Language switcher widget class
  */
-class LG_Language_Switcher_Widget extends WP_Widget {
+class LIFEAI_Language_Switcher_Widget extends WP_Widget {
 
     /**
      * Constructor
      */
     public function __construct() {
         parent::__construct(
-            'lg_language_switcher',
+            'lifeai_language_switcher',
             __('Lifegence Language Switcher', 'lifegence-aitranslator'),
             array(
                 'description' => __('Display language switcher for AI translation', 'lifegence-aitranslator'),
@@ -33,7 +33,7 @@ class LG_Language_Switcher_Widget extends WP_Widget {
      * Front-end widget output
      */
     public function widget($args, $instance) {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
 
         if (empty($settings['enabled'])) {
             return;
@@ -127,7 +127,7 @@ class LG_Language_Switcher_Widget extends WP_Widget {
      * Render language switcher
      */
     public function render_switcher($atts) {
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
         $supported_langs = $settings['supported_languages'] ?? array();
         $default_lang = $settings['default_language'] ?? 'en';
         $current_lang = $this->get_current_language();
@@ -153,7 +153,7 @@ class LG_Language_Switcher_Widget extends WP_Widget {
      * Render dropdown switcher
      */
     private function render_dropdown($langs, $current, $show_flags, $show_native) {
-        $all_languages = LG_AITranslator::get_all_languages();
+        $all_languages = LIFEAI_AITranslator::get_all_languages();
         ?>
         <div class="lg-lang-switcher lg-lang-dropdown">
             <select id="lg-lang-select" class="lg-lang-select">
@@ -176,7 +176,7 @@ class LG_Language_Switcher_Widget extends WP_Widget {
      * Render list switcher
      */
     private function render_list($langs, $current, $show_flags, $show_native) {
-        $all_languages = LG_AITranslator::get_all_languages();
+        $all_languages = LIFEAI_AITranslator::get_all_languages();
         ?>
         <div class="lg-lang-switcher lg-lang-list">
             <ul class="lg-lang-list">
@@ -201,7 +201,7 @@ class LG_Language_Switcher_Widget extends WP_Widget {
      * Render flags only
      */
     private function render_flags($langs, $current) {
-        $all_languages = LG_AITranslator::get_all_languages();
+        $all_languages = LIFEAI_AITranslator::get_all_languages();
         ?>
         <div class="lg-lang-switcher lg-lang-flags">
             <?php foreach ($langs as $code): ?>
@@ -252,17 +252,17 @@ class LG_Language_Switcher_Widget extends WP_Widget {
      */
     private function get_current_language() {
         // Use URL rewriter to detect language from URL
-        if (class_exists('LG_URL_Rewriter')) {
-            $url_rewriter = new LG_URL_Rewriter();
+        if (class_exists('LIFEAI_URL_Rewriter')) {
+            $url_rewriter = new LIFEAI_URL_Rewriter();
             return $url_rewriter->get_current_language();
         }
 
         // Fallback to old method
-        $settings = get_option('lg_aitranslator_settings', array());
+        $settings = get_option('lifeai_aitranslator_settings', array());
         $default = $settings['default_language'] ?? 'en';
 
-        if (isset($_COOKIE['lg_aitranslator_lang'])) {
-            return sanitize_text_field(wp_unslash($_COOKIE['lg_aitranslator_lang']));
+        if (isset($_COOKIE['lifeai_aitranslator_lang'])) {
+            return sanitize_text_field(wp_unslash($_COOKIE['lifeai_aitranslator_lang']));
         }
 
         // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Public query parameter for language selection
@@ -278,8 +278,8 @@ class LG_Language_Switcher_Widget extends WP_Widget {
      * Get language-specific URL
      */
     private function get_language_url($lang) {
-        if (class_exists('LG_URL_Rewriter')) {
-            $url_rewriter = new LG_URL_Rewriter();
+        if (class_exists('LIFEAI_URL_Rewriter')) {
+            $url_rewriter = new LIFEAI_URL_Rewriter();
             return $url_rewriter->get_language_url($lang);
         }
 
@@ -300,7 +300,7 @@ class LG_Language_Switcher_Widget extends WP_Widget {
             'type' => 'dropdown',
             'flags' => 'yes',
             'native_names' => 'yes'
-        ), $atts, 'lg_language_switcher');
+        ), $atts, 'lifeai_language_switcher');
 
         $widget = new self();
         return $widget->render_switcher($atts);
@@ -310,4 +310,4 @@ class LG_Language_Switcher_Widget extends WP_Widget {
 /**
  * Register language switcher shortcode
  */
-add_shortcode('lg_language_switcher', array('LG_Language_Switcher_Widget', 'shortcode_handler'));
+add_shortcode('lifeai_language_switcher', array('LIFEAI_Language_Switcher_Widget', 'shortcode_handler'));
