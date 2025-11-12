@@ -41,7 +41,7 @@ Transform your WordPress site into a multilingual platform with intelligent, con
 ### Installation
 
 1. Download the latest release from the [Releases](../../releases) page
-2. Upload `lg-aitranslator.zip` to WordPress via Plugins → Add New → Upload
+2. Upload `lifegence-aitranslator.zip` to WordPress via Plugins → Add New → Upload
 3. Activate the plugin
 4. Navigate to Settings → Lifegence AITranslator
 5. Configure your API key and preferences
@@ -66,8 +66,9 @@ Transform your WordPress site into a multilingual platform with intelligent, con
 
 ## Documentation
 
-- **[Installation Guide](lg-aitranslator/INSTALLATION.md)** - Detailed setup instructions
-- **[User Guide](lg-aitranslator/README.md)** - Features, usage, and troubleshooting
+- **[Installation Guide](docs/user/INSTALLATION.md)** - Detailed setup instructions
+- **[User Guide](docs/user/plugin-readme.md)** - Features, usage, and troubleshooting
+- **[Developer Documentation](docs/developer/README.md)** - Technical documentation for contributors
 - **[API Documentation](docs/)** - Developer integration guides
 - **[Contributing](CONTRIBUTING.md)** - How to contribute to this project
 
@@ -98,8 +99,8 @@ English • 日本語 • 简体中文 • 繁體中文 • 한국어 • Españ
 ### Project Structure
 
 ```
-lg-aitranslator/
-├── lg-aitranslator.php              # Main plugin file
+lifegence-aitranslator/
+├── lifegence-aitranslator.php       # Main plugin file
 ├── includes/                         # Core services
 │   ├── class-translation-service-*.php
 │   ├── class-translation-cache.php
@@ -127,10 +128,10 @@ lg-aitranslator/
 
 ```bash
 # PHP syntax check
-find lg-aitranslator -name "*.php" -exec php -l {} \;
+find . -path ./dist -prune -o -name "*.php" -exec php -l {} \;
 
 # WordPress coding standards (requires PHP_CodeSniffer)
-phpcs --standard=WordPress lg-aitranslator/
+phpcs --standard=WordPress --exclude=dist .
 ```
 
 ## Contributing
@@ -149,7 +150,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for deta
 
 ## License
 
-This project is licensed under the GPL v2 or later - see the [LICENSE](lg-aitranslator/LICENSE) file for details.
+This project is licensed under the GPL v2 or later - see the [LICENSE](LICENSE) file for details.
 
 ## Credits
 

@@ -18,25 +18,35 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # 設定
-PLUGIN_NAME="lg-aitranslator"
+PLUGIN_NAME="lifegence-aitranslator"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PLUGIN_DIR="${SCRIPT_DIR}/${PLUGIN_NAME}"
-OUTPUT_ZIP="${SCRIPT_DIR}/${PLUGIN_NAME}.zip"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+TEMP_DIR="${PROJECT_ROOT}/dist/temp"
+OUTPUT_ZIP="${PROJECT_ROOT}/dist/${PLUGIN_NAME}.zip"
 
 # ヘッダー表示
 echo -e "${BLUE}================================${NC}"
-echo -e "${BLUE}LG AI Translator - ZIP Creator${NC}"
+echo -e "${BLUE}Lifegence AI Translator - ZIP Creator${NC}"
 echo -e "${BLUE}================================${NC}"
 echo ""
 
-# プラグインディレクトリの存在確認
-if [ ! -d "$PLUGIN_DIR" ]; then
-    echo -e "${RED}❌ エラー: プラグインディレクトリが見つかりません${NC}"
-    echo -e "${RED}   場所: $PLUGIN_DIR${NC}"
+# プロジェクトルートの存在確認
+if [ ! -f "$PROJECT_ROOT/lifegence-aitranslator.php" ]; then
+    echo -e "${RED}❌ エラー: プラグインメインファイルが見つかりません${NC}"
+    echo -e "${RED}   場所: $PROJECT_ROOT/lifegence-aitranslator.php${NC}"
     exit 1
 fi
 
-echo -e "${GREEN}✓${NC} プラグインディレクトリ: ${PLUGIN_DIR}"
+echo -e "${GREEN}✓${NC} プロジェクトルート: ${PROJECT_ROOT}"
+
+# distディレクトリを作成
+mkdir -p "${PROJECT_ROOT}/dist"
+
+# 一時ディレクトリをクリーンアップして作成
+if [ -d "$TEMP_DIR" ]; then
+    rm -rf "$TEMP_DIR"
+fi
+mkdir -p "$TEMP_DIR/${PLUGIN_NAME}"
 
 # 既存のzipファイルを削除
 if [ -f "$OUTPUT_ZIP" ]; then
@@ -44,49 +54,37 @@ if [ -f "$OUTPUT_ZIP" ]; then
     rm -f "$OUTPUT_ZIP"
 fi
 
-# 除外するファイル/ディレクトリ
-EXCLUDE_PATTERNS=(
-    "*.git/*"
-    "*.gitignore"
-    "*.gitattributes"
-    "*node_modules/*"
-    "*vendor/*"
-    "*.DS_Store"
-    "*Thumbs.db"
-    "*.idea/*"
-    "*.vscode/*"
-    "*.swp"
-    "*.swo"
-    "*~"
-    "*.log"
-    "*.tmp"
-    "*.cache"
-    "*package-lock.json"
-    "*composer.lock"
-    "*.env"
-    "*.env.local"
-    "*tests/*"
-    "*test/*"
-    "*__tests__/*"
-    "*.github/*"
-)
+# プラグインファイルをコピー
+echo -e "${YELLOW}📦${NC} プラグインファイルをコピー中..."
+cd "$PROJECT_ROOT"
 
-# 除外パターンを構築
-EXCLUDE_ARGS=""
-for pattern in "${EXCLUDE_PATTERNS[@]}"; do
-    EXCLUDE_ARGS="$EXCLUDE_ARGS -x ${PLUGIN_NAME}/${pattern}"
-done
+# 必要なディレクトリをコピー
+cp -r admin "$TEMP_DIR/${PLUGIN_NAME}/"
+cp -r assets "$TEMP_DIR/${PLUGIN_NAME}/"
+cp -r includes "$TEMP_DIR/${PLUGIN_NAME}/"
+cp -r languages "$TEMP_DIR/${PLUGIN_NAME}/"
+
+# 必要なファイルをコピー
+cp lifegence-aitranslator.php "$TEMP_DIR/${PLUGIN_NAME}/"
+cp readme.txt "$TEMP_DIR/${PLUGIN_NAME}/"
+cp LICENSE "$TEMP_DIR/${PLUGIN_NAME}/"
+cp README.md "$TEMP_DIR/${PLUGIN_NAME}/"
+
+echo -e "${GREEN}✓${NC} ファイルコピー完了"
 
 # ZIP作成
 echo -e "${YELLOW}📦${NC} ZIP作成中..."
-cd "$SCRIPT_DIR"
+cd "$TEMP_DIR"
 
-if zip -r "$OUTPUT_ZIP" "$PLUGIN_NAME" $EXCLUDE_ARGS > /dev/null 2>&1; then
+if zip -r "$OUTPUT_ZIP" "$PLUGIN_NAME" > /dev/null 2>&1; then
     echo -e "${GREEN}✓${NC} ZIP作成完了"
 else
     echo -e "${RED}❌ ZIP作成に失敗しました${NC}"
     exit 1
 fi
+
+# 一時ディレクトリを削除
+rm -rf "$TEMP_DIR"
 
 # ファイルサイズ取得
 FILE_SIZE=$(du -h "$OUTPUT_ZIP" | cut -f1)
@@ -98,7 +96,7 @@ echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━�
 
 # 重要なファイルの存在確認
 IMPORTANT_FILES=(
-    "${PLUGIN_NAME}/lg-aitranslator.php"
+    "${PLUGIN_NAME}/lifegence-aitranslator.php"
     "${PLUGIN_NAME}/README.md"
     "${PLUGIN_NAME}/LICENSE"
     "${PLUGIN_NAME}/includes/class-gemini-translation-service.php"

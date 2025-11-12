@@ -1,6 +1,6 @@
 # Build artifacts
+dist/
 *.zip
-lg-aitranslator.zip
 
 # Development files
 .DS_Store
@@ -34,9 +34,6 @@ Desktop.ini
 # WordPress specific (if testing locally)
 wp-config.php
 .htaccess
-
-# Internal documentation (for development only)
-docs/
 
 # Documentation drafts
 *.draft.md
