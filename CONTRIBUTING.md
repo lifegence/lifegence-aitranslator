@@ -66,15 +66,15 @@ We actively welcome your pull requests for:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/lg-aitranslator.git
-   cd lg-aitranslator
+   git clone https://github.com/lifegence/wp-plugin-lifegence-aitranslator.git
+   cd wp-plugin-lifegence-aitranslator
    ```
 
 2. **Set up WordPress development environment**
    - Use Local, XAMPP, Docker, or your preferred setup
    - Symlink the plugin to your WordPress plugins directory:
      ```bash
-     ln -s /path/to/lg-aitranslator /path/to/wordpress/wp-content/plugins/
+     ln -s /path/to/wp-plugin-lifegence-aitranslator /path/to/wordpress/wp-content/plugins/lifegence-aitranslator
      ```
 
 3. **Get API keys for testing**
@@ -156,7 +156,7 @@ function lg_aitrans_translate_text( $text, $source_lang, $target_lang ) {
 ### PHP Syntax Check
 
 ```bash
-find lg-aitranslator -name "*.php" -exec php -l {} \;
+find lifegence-aitranslator -name "*.php" -exec php -l {} \;
 ```
 
 ### WordPress Coding Standards
@@ -167,7 +167,7 @@ composer global require "squizlabs/php_codesniffer=*"
 composer global require wp-coding-standards/wpcs
 
 # Run check
-phpcs --standard=WordPress lg-aitranslator/
+phpcs --standard=WordPress lifegence-aitranslator/
 ```
 
 ## Pull Request Process

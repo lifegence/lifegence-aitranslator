@@ -251,7 +251,7 @@ The plugin does not store any personal data beyond what WordPress normally store
 == Support ==
 
 For support, bug reports, or feature requests, please visit:
-https://github.com/lifegence/lifegence-aitranslator
+https://github.com/lifegence/wp-plugin-lifegence-aitranslator
 
 == Credits ==
 

@@ -65,7 +65,7 @@ Multiple display formats:
 
 ### 🚀 Installation
 
-1. Upload the plugin files to `/wp-content/plugins/lg-aitranslator/`
+1. Upload the plugin files to `/wp-content/plugins/lifegence-aitranslator/`
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to Settings → Lifegence AITranslator
 4. Enter your Google Gemini API key or OpenAI API key
@@ -212,7 +212,7 @@ add_filter('lg_aitranslator_languages', function($languages) {
 
 ### 👨‍💻 Support & Documentation
 
-- **Documentation**: [GitHub Repository](https://github.com/yourusername/lg-aitranslator)
+- **Documentation**: [GitHub Repository](https://github.com/lifegence/wp-plugin-lifegence-aitranslator)
 - **Issues**: Report bugs via GitHub Issues
 - **Support**: Community support via WordPress.org forums
 

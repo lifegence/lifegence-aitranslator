@@ -149,5 +149,5 @@ We use Semantic Versioning (MAJOR.MINOR.PATCH):
 
 ---
 
-[Unreleased]: https://github.com/yourusername/lg-aitranslator/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/yourusername/lg-aitranslator/releases/tag/v1.0.0
+[Unreleased]: https://github.com/lifegence/wp-plugin-lifegence-aitranslator/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/lifegence/wp-plugin-lifegence-aitranslator/releases/tag/v1.0.0

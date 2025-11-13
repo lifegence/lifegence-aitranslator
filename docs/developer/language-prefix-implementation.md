@@ -239,7 +239,7 @@ private function get_current_language() {
 ## File Structure
 
 ```
-lg-aitranslator/
+lifegence-aitranslator/
 ├── includes/
 │   ├── class-url-rewriter.php          [NEW]
 │   ├── class-content-translator.php    [NEW]
@@ -251,7 +251,7 @@ lg-aitranslator/
 ├── assets/
 │   └── js/
 │       └── frontend.js                  [UPDATE]
-├── lg-aitranslator.php                  [UPDATE]
+├── lifegence-aitranslator.php           [UPDATE]
 └── docs/
     └── language-prefix-implementation.md [THIS FILE]
 ```
@@ -281,7 +281,7 @@ lg-aitranslator/
 - [ ] Update shortcode to use URL-based detection
 
 ### Step 4: Update Main Plugin File
-- [ ] Load new classes in `lg-aitranslator.php`
+- [ ] Load new classes in `lifegence-aitranslator.php`
 - [ ] Initialize URL rewriter early (init priority 5)
 - [ ] Initialize content translator (default priority)
 - [ ] Flush rewrite rules on activation

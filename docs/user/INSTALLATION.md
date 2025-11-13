@@ -6,7 +6,7 @@ Developed by **Lifegence Corporation** (https://lifegence.com)
 
 ### Step 1: Install Plugin
 
-1. Upload `lg-aitranslator` folder to `/wp-content/plugins/`
+1. Upload `lifegence-aitranslator` folder to `/wp-content/plugins/`
 2. Activate via WordPress Admin → Plugins
 3. You'll see "Lifegence AITranslator" in Settings menu
 
